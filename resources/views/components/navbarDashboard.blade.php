@@ -19,7 +19,7 @@
                 <i class="fa-solid fa-basket-shopping"></i> Produits
             </a>
 
-            <a href=""
+            <a href="{{ route('categories.index') }}"
                class="flex items-center justify-start gap-2 px-3 py-2 rounded-xl w-full
           {{ request()->routeIs('categories.*') ? 'bg-red-600 text-white' : '' }}">
                 <i class="fa-solid fa-list"></i> Categories
