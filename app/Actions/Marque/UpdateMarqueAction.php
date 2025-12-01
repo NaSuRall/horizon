@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Actions\Marque;
+
+use App\DTOs\MarqueDTO;
+use App\Models\Marque;
+
+class UpdateMarqueAction
+{
+    public function __construct(){}
+
+
+    public function execute(MarqueDto $dto, $marque): Marque{
+        if ($dto->name !== null) {
+            $marque->name = $dto->name;
+        }
+        if ($dto->description !== null) {
+            $marque->description = $dto->description;
+        }
+        $marque->save();
+        return $marque;
+    }
+}
