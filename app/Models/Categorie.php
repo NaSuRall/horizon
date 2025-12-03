@@ -15,4 +15,9 @@ class Categorie extends Model
     {
         return $this->hasMany(Marque::class);
     }
+    public function produits()
+    {
+        return $this->hasMany(Produit::class);
+    }
+
 }

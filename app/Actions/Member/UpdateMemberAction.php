@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Actions\Member;
+
+use App\DTOs\CategorieDTO;
+use App\DTOs\MemberDTO;
+use App\Models\Categorie;
+use App\Models\User;
+
+class UpdateMemberAction
+{
+    public static function execute(MemberDTO $dto, $member): User{
+        if ($dto->name !== null) {
+            $member->name = $dto->name;
+        }
+        if ($dto->email !== null) {
+            $member->email = $dto->email;
+        }
+        if ($dto->password !== null) {
+            $member->password = $dto->password;
+        }
+        $member->save();
+        return $member;
+    }
+}

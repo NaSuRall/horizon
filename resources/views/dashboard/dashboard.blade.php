@@ -25,12 +25,48 @@
                     <div class="pointer-events-none absolute bottom-0 left-0 w-full h-25 bg-gradient-to-t from-gray-900 to-transparent"></div>
                 </div>
 
+            </div>
+            <div class="col-span-2 row-span-2 col-start-3 bg-gray-700 rounded-lg overflow-hidden">
+
+                <div class="flex flex-row w-full justify-between items-center border-b pb-2 p-2">
+                    <h2 class="flex text-xl items-center justify-center text-white"> Categories</h2>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 text-lg hover:text-gray-300 transition-all duration-100 hover:translate-x-0.5 hover:-translate-y-1"></i>
+                </div>
+                <div class="relative p-6 h-full overflow-hidden">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6 overflow-hidden">
+                        @foreach($categories as $categorie)
+                            <div class="bg-gray-700 text-white rounded-lg p-4 shadow hover:shadow-lg transition overflow-hidden">
+                                <h3 class="font-semibold text-lg mb-2">{{ $categorie->name }}</h3>
+                            </div>
+                        @endforeach
+                    </div>
+                    <!-- Dégradé flou -->
+                    <div class="pointer-events-none absolute bottom-0 left-0 w-full h-25 bg-gradient-to-t from-gray-900 to-transparent"></div>
+                </div>
 
             </div>
-            <div class="col-span-2 row-span-2 col-start-3 bg-gray-700 rounded-lg"></div>
-            <div class="row-span-6 col-start-5 bg-gray-700 rounded-lg"></div>
-            <div class="col-span-2 row-span-4 row-start-3 bg-gray-700 rounded-lg"></div>
-            <div class="col-span-2 row-span-4 col-start-3 row-start-3 bg-gray-700 rounded-lg"></div>
+            <div class="row-span-6 col-start-5 bg-gray-700 rounded-lg overflow-hidden">
+
+                <div class="flex flex-row w-full justify-between items-center border-b pb-2 p-2">
+                    <h2 class="flex text-xl items-center justify-center text-white"> Utilisateurs</h2>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-500 text-lg hover:text-gray-300 transition-all duration-100 hover:translate-x-0.5 hover:-translate-y-1"></i>
+                </div>
+                <div class="relative p-6 h-full overflow-hidden">
+                    <div class="grid grid-cols-1  gap-6 overflow-hidden">
+                        @foreach($users as $user)
+                            <div class="bg-gray-700 text-white rounded-lg  shadow hover:shadow-lg transition overflow-hidden">
+                                <h3 class="font-semibold text-lg mb-2">{{ $user->name }}</h3>
+                                <p class="text-sm">{{ $user->email }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                    <!-- Dégradé flou -->
+                    <div class="pointer-events-none absolute bottom-0 left-0 w-full h-25 bg-gradient-to-t from-gray-900 to-transparent"></div>
+                </div>
+
+            </div>
+            <div class="col-span-2 row-span-4 row-start-3 bg-gray-700 rounded-lg overflow-hidden"></div>
+            <div class="col-span-2 row-span-4 col-start-3 row-start-3 bg-gray-700 rounded-lg overflow-hidden"></div>
         </section>
     </div>
 @endsection

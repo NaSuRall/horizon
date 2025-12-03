@@ -51,7 +51,6 @@
                                             @csrf
                                             @method('PUT')
                                             <input type="text" name="name" value="{{ $categorie->name }}" class="w-full border p-2 rounded-lg"/>
-                                            <input type="text" name="description" value="{{ $categorie->description }}" class="w-full border p-2 rounded-lg"/>
                                             <button type="submit" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800">
                                                 Modifier
                                             </button>

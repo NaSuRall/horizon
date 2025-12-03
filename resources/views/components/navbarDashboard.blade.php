@@ -13,7 +13,7 @@
                 <i class="fa-solid fa-house"></i> Dashboard
             </a>
 
-            <a href=""
+            <a href="{{ route('produits.index') }}"
                class="flex items-center justify-start gap-2 px-3 py-2 rounded-xl w-full
           {{ request()->routeIs('produits.*') ? 'bg-red-600 text-white' : '' }}">
                 <i class="fa-solid fa-basket-shopping"></i> Produits
@@ -25,9 +25,9 @@
                 <i class="fa-solid fa-list"></i> Categories
             </a>
 
-            <a href=""
+            <a href="{{ route('members.index') }}"
                class="flex items-center justify-start gap-2 px-3 py-2 rounded-xl w-full
-          {{ request()->routeIs('users.*') ? 'bg-red-600 text-white' : '' }}">
+          {{ request()->routeIs('members.*') ? 'bg-red-600 text-white' : '' }}">
                 <i class="fa-solid fa-users"></i> Utilisateurs
             </a>
 
@@ -39,7 +39,14 @@
 
         </div>
     </div>
-    <div class="flex border-t w-full items-center text-sm  justify-center p-2">
+    <div class="flex flex-row border-t w-full items-center text-sm  justify-around gap-3 p-2">
         <a href="">Retour Au site</a>
+
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="px-2 py-2 bg-red-600 text-white  text-sm rounded">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </button>
+        </form>
     </div>
 </aside>

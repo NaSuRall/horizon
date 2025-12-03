@@ -11,4 +11,11 @@ class Marque extends Model
 
     protected $table = 'marque';
     protected $fillable = ["name", "description", "created_at", "updated_at"];
+
+
+    public function produits()
+    {
+        return $this->hasMany(Produit::class);
+    }
+
 }
