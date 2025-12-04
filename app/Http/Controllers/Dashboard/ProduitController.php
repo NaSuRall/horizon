@@ -11,8 +11,12 @@ use Illuminate\Http\Request;
 
 class ProduitController extends Controller
 {
+    public function show()
+    {
+        return view('site.produits');
+    }
    public function index(){
-       $produits = Produit::all();
+       $produits = Produit::paginate(9);
        return view('dashboard.produit', compact('produits'));
    }
     // index

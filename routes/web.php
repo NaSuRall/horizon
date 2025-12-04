@@ -4,11 +4,13 @@ use App\Http\Controllers\Dashboard\MarqueController;
 use \App\Http\Controllers\Dashboard\CategorieController;
 use App\Http\Controllers\Dashboard\MemberController;
 use App\Http\Controllers\Dashboard\ProduitController;
+use App\Models\Produit;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    $produits = Produit::all();
+    return view('welcome', compact('produits'));
+})->name('accueil');
 
 Auth::routes();
 
@@ -33,3 +35,15 @@ Route::put('/dashboard/{member}/member', [MemberController::class, 'update'])->n
 
 Route::get('/dashboard/produits', [ProduitController::class, 'index'])->name('produits.index');
 Route::post('/dashboard/produits', [ProduitController::class, 'store'])->name('produits.store');
+
+
+
+Route::get('/about', function () {
+    $produits = Produit::all();
+    return view('site.presentation', compact('produits'));})->name('site.about');
+Route::get('/produits' , [ProduitController::class, 'show'])->name('site.show.produits');
+
+
+Route::get('/contact', function () {
+    return view('site.contact');
+})->name('site.contact');
