@@ -15,7 +15,7 @@
     </div>
 
     <div class="flex w-[90%] items-center justify-center text-white">
-        <span class="text-sm hover:scale-125 transition-all">06 40 53 58 27</span>
+        <span class="text-sm hover:scale-125 transition-all">01 39 09 96 16</span>
     </div>
 
 </nav>

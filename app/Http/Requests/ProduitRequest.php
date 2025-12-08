@@ -22,13 +22,15 @@ class ProduitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'        => 'required|string|max:255',
-            'description' => 'required|string',
-            'price'       => 'required|numeric|min:0',
-            'ref'         => 'required|string|max:100|unique:produits,ref',
-            'marque_id'   => 'required|exists:marques,id',
-            'categorie_id'=> 'required|array',
-            'categorie_id.*' => 'exists:categories,id',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'ref' => 'required|string|unique:produits,ref',
+            'price' => 'required|numeric|min:0',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'marque_id' => 'required|exists:marque,id', // 👈 table au singulier
+            'categories' => 'array',
+            'categories.*' => 'exists:categories,id',
         ];
+
     }
 }

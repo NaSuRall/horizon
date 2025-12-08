@@ -19,7 +19,7 @@
             <!-- Contenu du header -->
             <div class="relative z-10 flex flex-col items-center justify-center gap-6">
                 <h1 class="text-5xl font-bold">Bienvenue chez Horizon Moto</h1>
-                <p class="text-sm">Situé à Saint-Ouen-l'Aumône, 95310 !</p>
+                <p class="text-sm">Rendez-nous visite à Saint-Ouen-l'Aumône et découvrez un lieu 100% dédié aux motards.</p>
                 <button class="px-6 py-2 rounded-xl bg-red-600 text-sm hover:bg-red-700 transition">
                     En savoir plus...
                 </button>
@@ -51,12 +51,12 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 @forelse($produits as $produit)
                     <!-- Carte produit -->
-                    <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col">
-                        <img src="{{ asset('img/produit1.jpg') }}" alt="Produit 1" class="h-48 w-full object-cover">
+                    <div class="bg-gray-900 rounded-xl shadow-lg overflow-hidden flex flex-col">
+                        <img src="{{ asset('storage/' . $produit->image) }}" alt="{{ $produit->name }}" class="w-full h-full object-cover">
                         <div class="p-6 flex flex-col flex-grow">
                             <h3 class="text-xl font-semibold mb-2">{{ $produit->name }}</h3>
                             <p class="text-sm text-gray-400 mb-1">{{ $produit->ref }}</p>
-                            <p class="text-lg font-bold text-red-500 mb-4">{{ $produit->price }}</p>
+                            <p class="text-lg font-bold text-red-500 mb-4">{{ $produit->price }} €</p>
                             <button class="mt-auto px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition">
                                 En savoir plus
                             </button>
@@ -75,11 +75,11 @@
 
         <section class="flex flex-col lg:flex-row w-full h-auto bg-gray-800 text-white px-10 py-16 gap-10">
             <!-- Bloc gauche : Carte -->
-            <div class="w-full  h-96 rounded-xl overflow-hidden shadow-lg">
+            <div class="w-full  h-[100% ] rounded-xl overflow-hidden shadow-lg">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2614.703803659302!2d2.116883876772681!3d49.054255171359536!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e65f85b6c9ddd7%3A0x16017c0e046b395f!2sMaxxess%20Horizon%20Moto!5e0!3m2!1sfr!2sfr!4v1764864000635!5m2!1sfr!2sfr"
                     width="600"
-                    height="450"
+                    height="500"
                     style="border:0;"
                     allowfullscreen=""
                     loading="lazy"
@@ -93,8 +93,6 @@
                 <p class="text-gray-300">Venez nous voir directement en magasin à Saint-Ouen-l’Aumône.</p>
                 <p class="text-red-600">Rue :  11 rue d'epluches (95310) </p>
                 <p class="text-gray-300">5 min a pied de la gare d'Epluches </p>
-
-
 
                 <div class="flex gap-4 mt-4">
                     <!-- Facebook -->
@@ -111,6 +109,12 @@
                     </a>
 
                 </div>
+                <h2 class="text-2xl font-bold">Nos Horaires</h2>
+                <p>Lundi - Vendredi: 9h30 - 12h30 / 14h00 - 19h00 <br>
+
+                    Samedi: 10h00 - 12h30 / 14h00 - 18h30 <br>
+
+                    Dimanche: <span class="text-red-500">Fermé</span></p>
             </div>
         </section>
 

@@ -35,6 +35,8 @@ Route::put('/dashboard/{member}/member', [MemberController::class, 'update'])->n
 
 Route::get('/dashboard/produits', [ProduitController::class, 'index'])->name('produits.index');
 Route::post('/dashboard/produits', [ProduitController::class, 'store'])->name('produits.store');
+Route::put('/dashboard/produits/{id}', [ProduitController::class, 'update'])->name('produits.update');
+Route::get('/dashboard/{id}/produits', [ProduitController::class, 'destroy'])->name('produits.delete');
 
 
 

@@ -2,11 +2,10 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- Bloc 1 : Logo / Présentation -->
         <div>
-            <img class="w-50" src="{{ asset('img/horizonmoto.png') }}" alt="">
+            <img class="w-30 mb-4" src="{{ asset('img/horizonmoto.png') }}" alt="">
             <h3 class="text-xl font-bold text-white mb-4">Horizon Moto</h3>
             <p class="text-sm">
-                Passion et expertise au service des motards.<br>
-                Situé à Saint-Ouen-l’Aumône (95310).
+                Rendez-nous visite à Saint-Ouen-l'Aumône et découvrez un lieu 100% dédié aux motards.
             </p>
         </div>
 

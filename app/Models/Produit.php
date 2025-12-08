@@ -11,14 +11,15 @@ class Produit extends Model
 
 
 
+    public function categories()
+    {
+        return $this->belongsToMany(Categorie::class, 'categorie_produit');
+    }
+
     public function marque()
     {
         return $this->belongsTo(Marque::class);
     }
 
-    public function categories()
-    {
-        return $this->belongsToMany(Categorie::class, 'categorie_produit');
-    }
 
 }
