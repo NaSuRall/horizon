@@ -7,6 +7,7 @@ use App\Actions\Produit\StoreProduitAction;
 use App\DTOs\ActualiteDTO;
 use App\DTOs\ProduitDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ArticleRequest;
 use App\Models\Actualite;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class ActualiteController extends Controller
         $actualites = Actualite::paginate(9);
         return view('dashboard.actualite', compact('actualites'));
     }
-    public function store(StoreActualiteAction $action , Request $request){
+    public function store(StoreActualiteAction $action , ArticleRequest $request){
         $dto = ActualiteDTO::formRequest($request);
         $actualites = $action->execute($dto);
 

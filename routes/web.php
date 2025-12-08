@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 // ----------------------
 Route::get('/', function () {
     $produits = Produit::latest()->take(6)->get();
-    return view('welcome', compact('produits'));
+    $lastActu = \App\Models\Actualite::latest()->first();
+    return view('welcome', compact('produits', 'lastActu'));
 })->name('accueil');
 
 Route::get('/about', function () {

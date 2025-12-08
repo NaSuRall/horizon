@@ -88,6 +88,7 @@
             </div>
 
             <!-- Modal create Actualité -->
+            <!-- Modal create Actualité -->
             <div id="modal-actualite" class="hidden fixed inset-0 bg-black/40 bg-opacity-50 flex items-center justify-center z-50">
                 <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative">
                     <button
@@ -96,11 +97,41 @@
                         <i class="fa-solid fa-x"></i>
                     </button>
                     <h2 class="text-xl font-semibold mb-4">Créer une actualité</h2>
+
                     <form action="{{ route('actualites.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                         @csrf
-                        <input type="text" name="titre" placeholder="Titre de l’actualité" class="w-full border p-2 rounded-lg"/>
-                        <textarea name="contenu" placeholder="Contenu de l’actualité" class="w-full border p-2 rounded-lg"></textarea>
-                        <input type="file" id="image" name="image" class="w-full border p-2 rounded-lg"/>
+
+                        <!-- Champ titre -->
+                        <div>
+                            <input type="text" name="titre" placeholder="Titre de l’actualité"
+                                   value="{{ old('titre') }}"
+                                   class="w-full border p-2 rounded-lg @error('titre') border-red-500 @enderror"/>
+                            @error('titre')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Champ contenu (textarea plus grand + limite 500 caractères) -->
+                        <div>
+                <textarea name="contenu" placeholder="Contenu de l’actualité (max 500 caractères)"
+                          rows="6" maxlength="500"
+                          class="w-full border p-2 rounded-lg @error('contenu') border-red-500 @enderror">{{ old('contenu') }}</textarea>
+                            @error('contenu')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                            <p class="text-xs text-gray-500 mt-1">500 caractères maximum</p>
+                        </div>
+
+                        <!-- Champ image -->
+                        <div>
+                            <input type="file" id="image" name="image"
+                                   class="w-full border p-2 rounded-lg @error('image') border-red-500 @enderror"/>
+                            @error('image')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Bouton submit -->
                         <button type="submit" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800">
                             Submit
                         </button>

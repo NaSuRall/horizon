@@ -40,7 +40,7 @@
             <a href="{{ route('actualite.index') }}"
                class="flex items-center justify-start gap-2 px-3 py-2 rounded-xl w-full
           {{ request()->routeIs('actualite.*') ? 'bg-red-600 text-white' : '' }}">
-                <i class="fa-solid fa-tag"></i> Actualités
+                <i class="fa-solid fa-newspaper"></i> Actualités
             </a>
 
 

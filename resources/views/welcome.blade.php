@@ -6,6 +6,32 @@
 
     <div class="flex flex-col w-full h-full m-0 p-0 bg-gray-800">
 
+        @if($lastActu)
+            <div id="modal-actualite" class=" fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg shadow-lg max-w-2xl  w-full p-6 relative">
+                    <!-- Bouton fermer -->
+                    <button
+                        onclick="document.getElementById('modal-actualite').classList.add('hidden')"
+                        class="absolute top-3 right-3 text-gray-600 hover:text-black">
+                        <i class="fa-solid fa-x"></i>
+                    </button>
+
+                    <!-- Image -->
+                    @if($lastActu->image)
+                        <img src="{{ asset('storage/'.$lastActu->image) }}" alt="{{ $lastActu->titre }}"
+                             class="w-full h-64 object-cover rounded mb-4">
+                    @endif
+
+                    <!-- Contenu -->
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ $lastActu->titre }}</h2>
+                    <p class="whitespace-pre-line text-gray-700 leading-relaxed mb-6">{{ $lastActu->contenu }}</p>
+                    <p class="text-sm text-gray-500">Publié le {{ $lastActu->created_at->format('d/m/Y H:i') }}</p>
+                </div>
+            </div>
+
+
+        @endif
+
         <!-- Header -->
         <header class="relative flex w-full min-h-screen text-white flex-col items-center justify-center overflow-hidden">
             <!-- Vidéo -->
