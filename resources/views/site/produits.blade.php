@@ -70,7 +70,7 @@
             </aside>
             <!-- Produits -->
             <main class="flex-1 bg-gray-700 rounded-lg p-4 md:p-6 overflow-y-auto">
-                <p class="text-sm text-red-500 mb-2">⚠️ Attention : tous les produits ne sont pas tous affichés directement sur le site. Veuillez vous rendre en magasin ou nous contacter pour en savoir plus sur votre demande.</p>
+                <p class="text-sm text-red-500 mb-2">⚠️ Attention : Les produits ne sont pas tous affichés directement sur le site. Veuillez vous rendre en magasin ou nous contacter pour en savoir plus sur votre demande.</p>
                 <h2 class="text-lg text-gray-200 mb-4">Produits disponibles</h2>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

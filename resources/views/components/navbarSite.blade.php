@@ -9,9 +9,9 @@
         <a href="{{ route('accueil') }}" class="text-sm hover:text-red-600 transition">Accueil</a>
         <a href="{{ route('site.about') }}" class="text-sm hover:text-red-600 transition">Présentation</a>
         <a href="{{ route('site.show.produits') }}" class="text-sm hover:text-red-600 transition">Produits</a>
-        <a href="#" class="text-sm hover:text-red-600 transition">Article</a>
-        <a href="#" class="text-sm hover:text-red-600 transition">Visite 3D</a>
+        <a href="{{ route("actualites.show") }}" class="text-sm hover:text-red-600 transition">Actualités</a>
         <a href="{{ route('site.contact') }}" class="text-sm hover:text-red-600 transition">Contact</a>
+        <a href="#" class="text-sm hover:text-red-600 transition text-gray-400">Visite 3D <span class="text-red-500">(Bientot Disponible)</span></a>
     </div>
 
     <!-- Téléphone (desktop uniquement) -->
@@ -37,9 +37,9 @@
     <a href="{{ route('accueil') }}" class="hover:text-red-600">Accueil</a>
     <a href="{{ route('site.about') }}" class="hover:text-red-600">Présentation</a>
     <a href="{{ route('site.show.produits') }}" class="hover:text-red-600">Produits</a>
-    <a href="#" class="hover:text-red-600">Article</a>
-    <a href="#" class="hover:text-red-600">Visite 3D</a>
+    <a href="{{ route('actualites.show') }}" class="hover:text-red-600">Actualités</a>
     <a href="{{ route('site.contact') }}" class="hover:text-red-600">Contact</a>
+    <a href="#" class="text-sm hover:text-red-600 transition text-gray-400">Visite 3D <span class="text-red-500">(Bientot Disponible)</span></a>
     <span class="mt-4 text-sm">📞 01 39 09 96 16</span>
 </div>
 

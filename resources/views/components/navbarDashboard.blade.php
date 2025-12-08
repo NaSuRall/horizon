@@ -37,16 +37,23 @@
                 <i class="fa-solid fa-tag"></i> Marques
             </a>
 
+            <a href="{{ route('actualite.index') }}"
+               class="flex items-center justify-start gap-2 px-3 py-2 rounded-xl w-full
+          {{ request()->routeIs('actualite.*') ? 'bg-red-600 text-white' : '' }}">
+                <i class="fa-solid fa-tag"></i> Actualités
+            </a>
+
+
             <a href="{{ route('activities.index') }}"
                class="flex items-center justify-start gap-2 px-3 py-2 rounded-xl w-full
           {{ request()->routeIs('activities.*') ? 'bg-red-600 text-white' : '' }}">
-                <i class="fa-solid fa-tag"></i> Activity
+                <i class="fa-solid fa-address-book"></i> Activity
             </a>
 
         </div>
     </div>
     <div class="flex flex-row border-t w-full items-center text-sm  justify-around gap-3 p-2">
-        <a href="">Retour Au site</a>
+        <a href="{{ route('accueil') }}">Retour Au site</a>
 
         <form action="{{ route('logout') }}" method="POST">
             @csrf

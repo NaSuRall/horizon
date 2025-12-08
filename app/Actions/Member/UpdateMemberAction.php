@@ -4,6 +4,7 @@ namespace App\Actions\Member;
 
 use App\DTOs\CategorieDTO;
 use App\DTOs\MemberDTO;
+use App\Models\Activity;
 use App\Models\Categorie;
 use App\Models\User;
 
@@ -20,6 +21,15 @@ class UpdateMemberAction
             $member->password = $dto->password;
         }
         $member->save();
+
+
+        Activity::create([
+            'type' => 'Marque',
+            'action' => 'Update',
+            'user_id' => auth()->id(),
+            'description' => "{$member->name} Modifier"
+        ]);
+
         return $member;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Actions\Marque;
 
 use App\DTOs\MarqueDTO;
+use App\Models\Activity;
 use App\Models\Marque;
 
 class StoreMarqueAction
@@ -14,6 +15,13 @@ class StoreMarqueAction
         $marques = Marque::create([
             'name' => $dto->name,
             'description' => $dto->description,
+        ]);
+
+        Activity::create([
+            'type' => 'Marque',
+            'action' => 'Crée',
+            'user_id' => auth()->id(),
+            'description' => "{$marques->name} Modifier"
         ]);
         return $marques;
     }

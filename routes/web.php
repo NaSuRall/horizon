@@ -1,58 +1,85 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\ActivityController;
+use App\Http\Controllers\Dashboard\ActualiteController;
+use App\Http\Controllers\Dashboard\CategorieController;
 use App\Http\Controllers\Dashboard\MarqueController;
-use \App\Http\Controllers\Dashboard\CategorieController;
 use App\Http\Controllers\Dashboard\MemberController;
 use App\Http\Controllers\Dashboard\ProduitController;
 use App\Models\Produit;
 use Illuminate\Support\Facades\Route;
 
+// ----------------------
+// Partie publique (SITE)
+// ----------------------
 Route::get('/', function () {
     $produits = Produit::latest()->take(6)->get();
     return view('welcome', compact('produits'));
 })->name('accueil');
 
-Auth::routes(['register' => false]);
-
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
-
-Route::get('/dashboard/marques', [MarqueController::class, 'index'])->name('marques.index');
-Route::post('/dashboard/marques', [MarqueController::class, 'store'])->name('marques.store');
-Route::get('/dashboard/{id}/marque', [MarqueController::class, 'destroy'])->name('marques.delete');
-Route::put('/dashboard/{marque}/marque', [MarqueController::class, 'update'])->name('marques.update');
-
-Route::get('/dashboard/categories', [CategorieController::class, 'index'])->name('categories.index');
-Route::post('/dashboard/categorie', [CategorieController::class, 'store'])->name('categories.store');
-Route::get('/dashboard/{id}/categorie', [CategorieController::class, 'destroy'])->name('categories.delete');
-Route::put('/dashboard/{categorie}/categorie', [CategorieController::class, 'update'])->name('categories.update');
-
-Route::get('/dashboard/member', [MemberController::class, 'index'])->name('members.index');
-Route::post('/dashboard/member', [MemberController::class, 'store'])->name('members.store');
-Route::get('/dashboard/{id}/member', [MemberController::class, 'destroy'])->name('members.delete');
-Route::put('/dashboard/{member}/member', [MemberController::class, 'update'])->name('members.update');
-
-
-Route::get('/dashboard/produits', [ProduitController::class, 'index'])->name('produits.index');
-Route::post('/dashboard/produits', [ProduitController::class, 'store'])->name('produits.store');
-Route::put('/dashboard/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
-Route::delete('/dashboard/produits/{id}', [ProduitController::class, 'destroy'])->name('produits.delete');
-
-
-Route::get('/dashboard/activity', [ActivityController::class, 'index'])->name('activities.index');
-
-
 Route::get('/about', function () {
     $produits = Produit::all();
-    return view('site.presentation', compact('produits'));})->name('site.about');
-Route::get('/produits' , [ProduitController::class, 'show'])->name('site.show.produits');
+    return view('site.presentation', compact('produits'));
+})->name('site.about');
 
-Route::get('/contact/send' , [ProduitController::class, 'show'])->name('contact.send');
-
-
+Route::get('/produits', [ProduitController::class, 'show'])->name('site.show.produits');
 
 Route::get('/contact', function () {
     return view('site.contact');
 })->name('site.contact');
+
+Route::get('/contact/send', [ProduitController::class, 'show'])->name('contact.send');
+
+Route::get('/actualites', [ActualiteController::class, 'show'])->name('actualites.show');
+
+// ----------------------
+// Authentification
+// ----------------------
+Auth::routes(['register' => false]); // désactive l'inscription publique
+Route::post('login', [LoginController::class, 'login'])->middleware('throttle:5,1');
+
+// ----------------------
+// Partie privée (DASHBOARD)
+// ----------------------
+// Protégée par auth + is_admin
+Route::middleware(['auth', 'is_admin'])->prefix('dashboard')->group(function () {
+
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
+
+    // Marques
+    Route::get('/marques', [MarqueController::class, 'index'])->name('marques.index');
+    Route::post('/marques', [MarqueController::class, 'store'])->name('marques.store');
+    Route::get('/marques/{id}/delete', [MarqueController::class, 'destroy'])->name('marques.delete');
+    Route::put('/marques/{marque}', [MarqueController::class, 'update'])->name('marques.update');
+
+    // Catégories
+    Route::get('/categories', [CategorieController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{id}/delete', [CategorieController::class, 'destroy'])->name('categories.delete');
+    Route::put('/categories/{categorie}', [CategorieController::class, 'update'])->name('categories.update');
+
+    // Membres
+    Route::get('/members', [MemberController::class, 'index'])->name('members.index');
+    Route::post('/members', [MemberController::class, 'store'])->name('members.store');
+    Route::get('/members/{id}/delete', [MemberController::class, 'destroy'])->name('members.delete');
+    Route::put('/members/{member}', [MemberController::class, 'update'])->name('members.update');
+
+    // Produits
+    Route::get('/produits', [ProduitController::class, 'index'])->name('produits.index');
+    Route::post('/produits', [ProduitController::class, 'store'])->name('produits.store');
+    Route::put('/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
+    Route::delete('/produits/{id}', [ProduitController::class, 'destroy'])->name('produits.delete');
+
+    // Activités
+    Route::get('/activity', [ActivityController::class, 'index'])->name('activities.index');
+
+
+    // Actualités
+    Route::get('/actualites', [ActualiteController::class, 'index'])->name('actualite.index');
+    Route::post('/actualites', [ActualiteController::class, 'store'])->name('actualites.store');
+    Route::put('/actualites/{actualite}', [ActualiteController::class, 'update'])->name('actualites.update');
+    Route::delete('/actualites/{actualite}', [ActualiteController::class, 'delete'])->name('actualites.delete');
+
+
+});
