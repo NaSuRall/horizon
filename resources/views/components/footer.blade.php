@@ -26,11 +26,11 @@
             <div class="flex gap-4">
                 <a href="https://www.facebook.com/" target="_blank"
                    class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 transition">
-                    <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 24 24"><path d="M22 12..."/></svg>
+                    <i class="fa-brands fa-facebook"></i>
                 </a>
                 <a href="https://www.instagram.com/" target="_blank"
                    class="w-10 h-10 flex items-center justify-center rounded-full bg-red-600 hover:bg-red-700 transition">
-                    <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 24 24"><path d="M12 2.2..."/></svg>
+                    <i class="fa-brands fa-instagram text-white"></i>
                 </a>
             </div>
         </div>

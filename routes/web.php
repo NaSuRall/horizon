@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\ActivityController;
 use App\Http\Controllers\Dashboard\MarqueController;
 use \App\Http\Controllers\Dashboard\CategorieController;
 use App\Http\Controllers\Dashboard\MemberController;
@@ -38,6 +39,9 @@ Route::get('/dashboard/produits', [ProduitController::class, 'index'])->name('pr
 Route::post('/dashboard/produits', [ProduitController::class, 'store'])->name('produits.store');
 Route::put('/dashboard/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
 Route::delete('/dashboard/produits/{id}', [ProduitController::class, 'destroy'])->name('produits.delete');
+
+
+Route::get('/dashboard/activity', [ActivityController::class, 'index'])->name('activities.index');
 
 
 Route::get('/about', function () {

@@ -108,7 +108,7 @@
         new Chart(ctxDoughnut, {
             type: 'doughnut',
             data: {
-                labels: @json($categories->pluck('name')),
+
                 datasets: [{
                     data: @json($categories->map(fn($c) => $c->produits->count())),
                     backgroundColor: [

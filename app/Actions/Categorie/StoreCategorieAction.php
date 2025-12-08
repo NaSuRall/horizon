@@ -4,6 +4,7 @@ namespace App\Actions\Categorie;
 
 use App\DTOs\CategorieDTO;
 use App\DTOs\MarqueDTO;
+use App\Models\Activity;
 use App\Models\Categorie;
 
 class StoreCategorieAction
@@ -12,6 +13,14 @@ class StoreCategorieAction
         $categorie = Categorie::create([
             'name'=> $dto->name,
         ]);
+
+        Activity::create([
+            'type' => 'Categorie',
+            'action' => 'créé',
+            'user_id' => auth()->id(),
+            'description' => "Categorie {$dto->name} ajouté"
+        ]);
+
         return $categorie;
     }
 
