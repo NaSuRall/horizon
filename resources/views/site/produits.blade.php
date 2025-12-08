@@ -1,8 +1,95 @@
 @extends("layouts.app")
 
-@section('content')
-    @include('components.navbarSite')
-    <!-- Reste du site web  -->
+@section("content")
+
+    @include("components.navbarSite")
+
+    <div class="flex flex-col w-full h-full pt-10">
+        <section class="flex w-full h-full p-10 gap-4">
+            <!-- Sidebar -->
+            <aside class="w-full md:w-1/4 bg-gray-800 text-white rounded-lg p-4 space-y-6 max-h-[90vh] overflow-y-auto">
+                <h2 class="text-lg font-semibold">Filtres</h2>
+
+                <!-- Recherche -->
+                <div>
+                    <label for="search" class="block text-sm mb-1">Rechercher</label>
+                    <input type="text" id="search" name="search" placeholder="Nom du produit..."
+                           class="w-full border p-2 rounded-lg text-black bg-white"/>
+                </div>
+
+                <!-- Prix -->
+                <div>
+                    <h3 class="text-sm font-semibold mb-2">Prix</h3>
+                    <div class="flex gap-2">
+                        <input type="number" id="price_min" name="price_min" placeholder="Min"
+                               class="w-1/2 border p-2 rounded-lg text-black bg-white"/>
+                        <input type="number" id="price_max" name="price_max" placeholder="Max"
+                               class="w-1/2 border p-2 rounded-lg text-black bg-white"/>
+                    </div>
+                </div>
+
+                <!-- Marques -->
+                <div>
+                    <h3 class="text-sm font-semibold mb-2">Marques</h3>
+                    <div class="space-y-1 max-h-32 overflow-y-auto">
+                        @foreach($marques as $marque)
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="marques[]" value="{{ $marque->id }}" class="form-checkbox h-4 w-4 text-blue-600">
+                                <span>{{ $marque->name }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Catégories -->
+                <div>
+                    <h3 class="text-sm font-semibold mb-2">Catégories</h3>
+                    <div class="space-y-1 max-h-40 overflow-y-auto">
+                        @foreach($categories as $cat)
+                            <label class="flex items-center gap-2">
+                                <input type="checkbox" name="categories[]" value="{{ $cat->id }}" class="form-checkbox h-4 w-4 text-blue-600">
+                                <span>{{ $cat->name }}</span>
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Bouton appliquer -->
+                <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600">
+                    Appliquer les filtres
+                </button>
+            </aside>
+
+            <!-- Produits -->
+            <main class="flex-1 bg-gray-700 rounded-lg p-6 overflow-y-auto">
+                <p class="text-sm text-red-500 mb-2 ">⚠️ Attention : tous les produits ne sont pas tous afficher directement sur le site. Veuillez vous rendre en magasin ou nous contacter pour en savoir plus sur votre demande.</p>
+                <h2 class="text-lg text-gray-200 mb-4">Produits disponibles</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($produits as $produit)
+                        <div class="bg-gray-800 text-white rounded-lg shadow p-4 flex flex-col">
+                            <img src="{{ asset('storage/' . $produit->image) }}" alt="{{ $produit->name }}"
+                                 class="w-full h-40 object-cover rounded mb-3">
+                            <h3 class="text-lg font-semibold">{{ $produit->name }}</h3>
+                            <p class="mt-2 font-bold text-red-500">{{ $produit->price }} €</p>
+                            <p class="text-sm">Marque : {{ $produit->marque->name ?? '-' }}</p>
+                            <div class="flex flex-wrap gap-1 mt-2">
+                                @foreach($produit->categories as $cat)
+                                    <span class="bg-gray-600 px-2 py-1 rounded text-xs">{{ $cat->name }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-6">
+                    {{ $produits->links() }}
+                </div>
+            </main>
+        </section>
+    </div>
+
 
     @include('components.footer')
 @endsection

@@ -17,7 +17,9 @@ class ProduitController extends Controller
     public function show()
     {
         $marques = Marque::all();
-        return view('site.produits', compact('marques'));
+        $categories = Categorie::all();
+        $produits = Produit::paginate(6);
+        return view('site.produits', compact('marques', "categories", "produits"));
     }
    public function index(){
        $produits = Produit::paginate(9);

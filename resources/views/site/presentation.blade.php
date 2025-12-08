@@ -48,27 +48,7 @@
             </div>
         </section>
 
-        <!-- Produits phares -->
-        <section class="px-10 py-16">
-            <h2 class="text-3xl font-bold text-center mb-10">Nos produits phares</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                @forelse($produits as $produit)
-                    <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col">
-                        <img src="{{ asset('storage/'.$produit->img) }}" alt="{{ $produit->name }}" class="h-48 w-full object-cover">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <h3 class="text-xl font-semibold mb-2">{{ $produit->name }}</h3>
-                            <p class="text-sm text-gray-400 mb-1">Ref: {{ $produit->ref }}</p>
-                            <p class="text-lg font-bold text-red-500 mb-4">{{ $produit->price }} €</p>
-                            <button class="mt-auto px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition">
-                                En savoir plus
-                            </button>
-                        </div>
-                    </div>
-                @empty
-                    <p class="text-center text-gray-400">Pas de produits disponibles actuellement.</p>
-                @endforelse
-            </div>
-        </section>
+
 
 
         <!-- Footer -->

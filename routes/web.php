@@ -8,7 +8,7 @@ use App\Models\Produit;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $produits = Produit::all();
+    $produits = Produit::latest()->take(6)->get();
     return view('welcome', compact('produits'));
 })->name('accueil');
 
@@ -44,6 +44,9 @@ Route::get('/about', function () {
     $produits = Produit::all();
     return view('site.presentation', compact('produits'));})->name('site.about');
 Route::get('/produits' , [ProduitController::class, 'show'])->name('site.show.produits');
+
+Route::get('/contact/send' , [ProduitController::class, 'show'])->name('contact.send');
+
 
 
 Route::get('/contact', function () {
