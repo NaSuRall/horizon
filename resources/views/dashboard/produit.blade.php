@@ -66,7 +66,7 @@
                                             <i class="fa-solid fa-x"></i>
                                         </button>
                                         <h2 class="text-xl font-semibold mb-4">Modifier le produit</h2>
-                                        <form action="{{ route('produits.update', $produit->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                                        <form action="{{  route('produits.update', $produit->id)  }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                                             @csrf
                                             @method('PUT')
                                             <input type="text" name="name" value="{{ $produit->name }}" class="w-full border p-2 rounded-lg"/>
@@ -92,9 +92,14 @@
                                 </div>
 
                                 <!-- Delete -->
-                                <a href="{{ route('produits.delete', $produit->id) }}" class="text-sm bg-red-600 text-black p-2 rounded-lg">
-                                    <i class="fa-solid fa-trash"></i>
-                                </a>
+                                <form action="{{ route('produits.delete', $produit->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer ce produit ?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-sm bg-red-600 text-black p-2 rounded-lg">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+
                             </td>
                         </tr>
                     @endforeach
@@ -107,7 +112,6 @@
                 {{ $produits->links() }}
             </div>
 
-            <!-- Modal create Produit -->
             <!-- Modal create Produit -->
             <div id="modal-produit" class="hidden fixed inset-0 bg-black/40 bg-opacity-50 flex items-center justify-center z-50">
                 <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative

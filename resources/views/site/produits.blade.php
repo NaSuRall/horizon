@@ -5,67 +5,75 @@
     @include("components.navbarSite")
 
     <div class="flex flex-col w-full h-full pt-10">
-        <section class="flex w-full h-full p-10 gap-4">
+        <!-- Responsive layout -->
+        <section class="flex flex-col md:flex-row w-full h-full p-4 md:p-10 gap-4">
+
             <!-- Sidebar -->
             <aside class="w-full md:w-1/4 bg-gray-800 text-white rounded-lg p-4 space-y-6 max-h-[90vh] overflow-y-auto">
-                <h2 class="text-lg font-semibold">Filtres</h2>
+                <form method="GET" action="{{ route('site.show.produits') }}" class="flex flex-col gap-6">
+                    <h2 class="text-lg font-semibold">Filtres</h2>
 
-                <!-- Recherche -->
-                <div>
-                    <label for="search" class="block text-sm mb-1">Rechercher</label>
-                    <input type="text" id="search" name="search" placeholder="Nom du produit..."
-                           class="w-full border p-2 rounded-lg text-black bg-white"/>
-                </div>
-
-                <!-- Prix -->
-                <div>
-                    <h3 class="text-sm font-semibold mb-2">Prix</h3>
-                    <div class="flex gap-2">
-                        <input type="number" id="price_min" name="price_min" placeholder="Min"
-                               class="w-1/2 border p-2 rounded-lg text-black bg-white"/>
-                        <input type="number" id="price_max" name="price_max" placeholder="Max"
-                               class="w-1/2 border p-2 rounded-lg text-black bg-white"/>
+                    <!-- Recherche -->
+                    <div>
+                        <label for="search" class="block text-sm mb-1">Rechercher</label>
+                        <input type="text" id="search" name="search" value="{{ request('search') }}"
+                               placeholder="Nom du produit..."
+                               class="w-full border p-2 rounded-lg text-black bg-white"/>
                     </div>
-                </div>
 
-                <!-- Marques -->
-                <div>
-                    <h3 class="text-sm font-semibold mb-2">Marques</h3>
-                    <div class="space-y-1 max-h-32 overflow-y-auto">
-                        @foreach($marques as $marque)
-                            <label class="flex items-center gap-2">
-                                <input type="checkbox" name="marques[]" value="{{ $marque->id }}" class="form-checkbox h-4 w-4 text-blue-600">
-                                <span>{{ $marque->name }}</span>
-                            </label>
-                        @endforeach
+                    <!-- Prix -->
+                    <div>
+                        <h3 class="text-sm font-semibold mb-2">Prix</h3>
+                        <div class="flex gap-2">
+                            <input type="number" id="price_min" name="price_min" value="{{ request('price_min') }}"
+                                   placeholder="Min" class="w-1/2 border p-2 rounded-lg text-black bg-white"/>
+                            <input type="number" id="price_max" name="price_max" value="{{ request('price_max') }}"
+                                   placeholder="Max" class="w-1/2 border p-2 rounded-lg text-black bg-white"/>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Catégories -->
-                <div>
-                    <h3 class="text-sm font-semibold mb-2">Catégories</h3>
-                    <div class="space-y-1 max-h-40 overflow-y-auto">
-                        @foreach($categories as $cat)
-                            <label class="flex items-center gap-2">
-                                <input type="checkbox" name="categories[]" value="{{ $cat->id }}" class="form-checkbox h-4 w-4 text-blue-600">
-                                <span>{{ $cat->name }}</span>
-                            </label>
-                        @endforeach
+                    <!-- Marques -->
+                    <div>
+                        <h3 class="text-sm font-semibold mb-2">Marques</h3>
+                        <div class="space-y-1 max-h-32 overflow-y-auto">
+                            @foreach($marques as $marque)
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" name="marques[]" value="{{ $marque->id }}"
+                                           @checked(in_array($marque->id, request('marques', [])))
+                                           class="form-checkbox h-4 w-4 text-blue-600">
+                                    <span>{{ $marque->name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
 
-                <!-- Bouton appliquer -->
-                <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600">
-                    Appliquer les filtres
-                </button>
+                    <!-- Catégories -->
+                    <div>
+                        <h3 class="text-sm font-semibold mb-2">Catégories</h3>
+                        <div class="space-y-1 max-h-40 overflow-y-auto">
+                            @foreach($categories as $cat)
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" name="categories[]" value="{{ $cat->id }}"
+                                           @checked(in_array($cat->id, request('categories', [])))
+                                           class="form-checkbox h-4 w-4 text-blue-600">
+                                    <span>{{ $cat->name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Bouton appliquer -->
+                    <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600">
+                        Appliquer les filtres
+                    </button>
+                </form>
             </aside>
-
             <!-- Produits -->
-            <main class="flex-1 bg-gray-700 rounded-lg p-6 overflow-y-auto">
-                <p class="text-sm text-red-500 mb-2 ">⚠️ Attention : tous les produits ne sont pas tous afficher directement sur le site. Veuillez vous rendre en magasin ou nous contacter pour en savoir plus sur votre demande.</p>
+            <main class="flex-1 bg-gray-700 rounded-lg p-4 md:p-6 overflow-y-auto">
+                <p class="text-sm text-red-500 mb-2">⚠️ Attention : tous les produits ne sont pas tous affichés directement sur le site. Veuillez vous rendre en magasin ou nous contacter pour en savoir plus sur votre demande.</p>
                 <h2 class="text-lg text-gray-200 mb-4">Produits disponibles</h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($produits as $produit)
                         <div class="bg-gray-800 text-white rounded-lg shadow p-4 flex flex-col">
                             <img src="{{ asset('storage/' . $produit->image) }}" alt="{{ $produit->name }}"
@@ -89,7 +97,6 @@
             </main>
         </section>
     </div>
-
 
     @include('components.footer')
 @endsection

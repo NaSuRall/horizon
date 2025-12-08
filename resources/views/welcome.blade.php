@@ -30,7 +30,7 @@
         </header>
 
         <!-- Logos défilants -->
-        <section class="relative flex w-full h-16 sm:h-20 p-4 sm:p-6 overflow-hidden mt-5">
+        <section class="relative flex w-full h-16 sm:h-20 p-4 sm:p-6 overflow-hidden mt-5 bg-white/30">
             <div class="flex animate-marquee whitespace-nowrap">
                 <img src="{{ asset('img/ESPACEK.jpg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
                 <img src="{{ asset('img/honda.svg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
@@ -98,7 +98,7 @@
                         Facebook
                     </a>
                     <a href="https://www.instagram.com/" target="_blank"
-                       class="px-3 sm:px-4 py-2 bg-pink-600 rounded-lg hover:bg-pink-700 transition flex items-center gap-2 text-xs sm:text-sm">
+                       class="px-3 sm:px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition flex items-center gap-2 text-xs sm:text-sm">
                         Instagram
                     </a>
                 </div>

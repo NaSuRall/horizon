@@ -29,7 +29,7 @@
                     <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 24 24"><path d="M22 12..."/></svg>
                 </a>
                 <a href="https://www.instagram.com/" target="_blank"
-                   class="w-10 h-10 flex items-center justify-center rounded-full bg-pink-600 hover:bg-pink-700 transition">
+                   class="w-10 h-10 flex items-center justify-center rounded-full bg-red-600 hover:bg-red-700 transition">
                     <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 24 24"><path d="M12 2.2..."/></svg>
                 </a>
             </div>

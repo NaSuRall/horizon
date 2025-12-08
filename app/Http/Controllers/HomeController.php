@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use App\Models\Marque;
+use App\Models\Produit;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -30,9 +31,10 @@ class HomeController extends Controller
     }
 
     public function dashboard(){
-        $marques = Marque::all();
-        $categories = Categorie::all();
+        $marques = Marque::withCount('produits')->get();
+        $categories = Categorie::withCount('produits')->get();
         $users = User::all();
-        return view('dashboard.dashboard', compact('marques', 'categories', 'users'));
+        $produits = Produit::all();
+        return view('dashboard.dashboard', compact('marques', 'categories', 'users', 'produits'));
     }
 }

@@ -12,7 +12,8 @@ Route::get('/', function () {
     return view('welcome', compact('produits'));
 })->name('accueil');
 
-Auth::routes();
+Auth::routes(['register' => false]);
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
@@ -35,9 +36,8 @@ Route::put('/dashboard/{member}/member', [MemberController::class, 'update'])->n
 
 Route::get('/dashboard/produits', [ProduitController::class, 'index'])->name('produits.index');
 Route::post('/dashboard/produits', [ProduitController::class, 'store'])->name('produits.store');
-Route::put('/dashboard/produits/{id}', [ProduitController::class, 'update'])->name('produits.update');
-Route::get('/dashboard/{id}/produits', [ProduitController::class, 'destroy'])->name('produits.delete');
-
+Route::put('/dashboard/produits/{produit}', [ProduitController::class, 'update'])->name('produits.update');
+Route::delete('/dashboard/produits/{id}', [ProduitController::class, 'destroy'])->name('produits.delete');
 
 
 Route::get('/about', function () {
