@@ -18,6 +18,8 @@
                 <li><a href="{{ route('site.show.produits') }}" class="hover:text-red-500 transition text-sm">Produits</a></li>
                 <li><a href="{{ route('actualites.show') }}" class="hover:text-red-500 transition text-sm">Actualités</a></li>
                 <li><a href="{{ route('site.contact') }}" class="hover:text-red-500 transition text-sm">Contact</a></li>
+                <li><a href="{{ route('site.mentions') }}" class="hover:text-red-500 transition text-sm">Mentions Légales</a></li>
+                <li><a href="{{ route('site.politique') }}" class="hover:text-red-500 transition text-sm">Politiques Confidentialité</a></li>
                 <li><a href="" class=" text-gray-600 transition text-sm">Visite 3d</a></li>
             </ul>
         </div>
@@ -26,11 +28,11 @@
         <div>
             <h3 class="text-xl font-bold text-white mb-4">Suivez-nous</h3>
             <div class="flex gap-4">
-                <a href="https://www.facebook.com/" target="_blank"
+                <a href="{{ env('FACKBOOK_LINK') }}" target="_blank"
                    class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-600 hover:bg-blue-700 transition">
                     <i class="fa-brands fa-facebook"></i>
                 </a>
-                <a href="https://www.instagram.com/" target="_blank"
+                <a href="{{ env('INSTA_LINK') }}" target="_blank"
                    class="w-10 h-10 flex items-center justify-center rounded-full bg-red-600 hover:bg-red-700 transition">
                     <i class="fa-brands fa-instagram text-white"></i>
                 </a>

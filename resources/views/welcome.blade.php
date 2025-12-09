@@ -119,11 +119,11 @@
                 <p class="text-gray-300">5 min à pied de la gare d'Epluches</p>
 
                 <div class="flex flex-wrap gap-4 mt-4">
-                    <a href="https://www.facebook.com/" target="_blank"
+                    <a href="{{ env('FACKBOOK_LINK') }}" target="_blank"
                        class="px-3 sm:px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition flex items-center gap-2 text-xs sm:text-sm">
                         Facebook
                     </a>
-                    <a href="https://www.instagram.com/" target="_blank"
+                    <a href="{{ env('INSTA_LINK') }}" target="_blank"
                        class="px-3 sm:px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition flex items-center gap-2 text-xs sm:text-sm">
                         Instagram
                     </a>

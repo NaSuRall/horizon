@@ -43,9 +43,14 @@
 
                 <!-- Réseaux sociaux -->
                 <div class="flex gap-4 mt-6">
-                    <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 transition transform hover:scale-110">
+                    <a href="{{ env('FACKBOOK_LINK') }}" class="w-10 h-10 flex items-center justify-center rounded-full bg-red-500 hover:bg-red-600 transition transform hover:scale-110">
                         <i class="fa-brands fa-facebook-f"></i>
                     </a>
+                    <a href="{{ env('INSTA_LINK') }}" target="_blank"
+                       class="w-10 h-10 flex items-center justify-center rounded-full bg-red-600 hover:bg-red-700 transition">
+                        <i class="fa-brands fa-instagram text-white"></i>
+                    </a>
+
                 </div>
             </div>
 
@@ -93,9 +98,11 @@
                         Envoyer le message
                     </button>
 
+
                     <p class="text-gray-400 text-sm mt-3">
-                        Les informations collectées via ce formulaire sont envoyées par e‑mail pour répondre à votre demande.
+                        Les informations collectées via ce formulaire sont envoyées par e‑mail pour répondre à votre demande. <span class="text-red-500">*</span>
                     </p>
+                    <a href="{{ route('site.politique') }}" class="hover:text-red-500 transition text-sm">Politiques Confidentialité</a>
                 </form>
             </div>
         </div>

@@ -18,23 +18,26 @@ Route::get('/', function () {
     $lastActu = \App\Models\Actualite::latest()->first();
     return view('welcome', compact('produits', 'lastActu'));
 })->name('accueil');
-
 Route::get('/about', function () {
     $produits = Produit::all();
     return view('site.presentation', compact('produits'));
 })->name('site.about');
-
 Route::get('/produits', [ProduitController::class, 'show'])->name('site.show.produits');
-
 Route::get('/contact', function () {
     return view('site.contact');
 })->name('site.contact');
-
 Route::get('/actualites', [ActualiteController::class, 'show'])->name('actualites.show');
-
-
 Route::post('/contact', [\App\Http\Controllers\Mail\ContactController::class, 'sendContact'])->name('contact.send');
 
+
+
+Route::get('/mentions-legales', function () {
+    return view('site.mentionsLegales');
+})->name('site.mentions');
+
+Route::get('/politique-de-confidentialite', function () {
+    return view('site.politiqueConfidentialite');
+})->name('site.politique');
 // ----------------------
 // Authentification
 // ----------------------
