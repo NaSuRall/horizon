@@ -13,10 +13,12 @@
         <div>
             <h3 class="text-xl font-bold text-white mb-4">Liens utiles</h3>
             <ul class="space-y-2">
-                <li><a href="#" class="hover:text-red-500 transition">Accueil</a></li>
-                <li><a href="#" class="hover:text-red-500 transition">Produits</a></li>
-                <li><a href="#" class="hover:text-red-500 transition">Nous retrouver</a></li>
-                <li><a href="#" class="hover:text-red-500 transition">Contact</a></li>
+                <li><a href="{{ route('accueil') }}" class="hover:text-red-500 transition text-sm">Accueil</a></li>
+                <li><a href="{{ route('site.about') }}" class="hover:text-red-500 transition text-sm">Présentation</a></li>
+                <li><a href="{{ route('site.show.produits') }}" class="hover:text-red-500 transition text-sm">Produits</a></li>
+                <li><a href="{{ route('actualites.show') }}" class="hover:text-red-500 transition text-sm">Actualités</a></li>
+                <li><a href="{{ route('site.contact') }}" class="hover:text-red-500 transition text-sm">Contact</a></li>
+                <li><a href="" class=" text-gray-600 transition text-sm">Visite 3d</a></li>
             </ul>
         </div>
 

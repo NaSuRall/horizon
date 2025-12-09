@@ -33,8 +33,11 @@
                         renaud@maxxess.paris
                     </li>
                     <li class="flex items-center gap-3">
-                        <i class="fa-solid fa-clock text-white text-lg"></i>
-                        Lundi - Vendredi : 9h00 - 18h30
+                        <p class="text-sm sm:text-base">
+                            Lundi - Vendredi: 9h30 - 12h30 / 14h00 - 19h00 <br>
+                            Samedi: 10h00 - 12h30 / 14h00 - 18h30 <br>
+                            Dimanche: <span class="text-red-500">Fermé</span>
+                        </p>
                     </li>
                 </ul>
 
@@ -48,6 +51,13 @@
 
             <!-- Formulaire -->
             <div class="flex-1 min-w-[350px] bg-gray-800 p-6 rounded-lg shadow-lg">
+
+                @if(session('success'))
+                    <div class="alert alert-success text-green-200 bg-green-600 p-3 rounded-xl">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 <h3 class="text-red-500 text-xl font-semibold mb-4">Envoyez-nous un message</h3>
 
                 <form action="{{ route('contact.send') }}" method="POST" class="space-y-4">

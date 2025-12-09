@@ -30,9 +30,10 @@ Route::get('/contact', function () {
     return view('site.contact');
 })->name('site.contact');
 
-Route::get('/contact/send', [ProduitController::class, 'show'])->name('contact.send');
-
 Route::get('/actualites', [ActualiteController::class, 'show'])->name('actualites.show');
+
+
+Route::post('/contact', [\App\Http\Controllers\Mail\ContactController::class, 'sendContact'])->name('contact.send');
 
 // ----------------------
 // Authentification
