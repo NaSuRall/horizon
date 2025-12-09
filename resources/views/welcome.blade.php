@@ -45,7 +45,7 @@
 
             <!-- Contenu -->
             <div class="relative z-10 flex flex-col items-center justify-center gap-6 px-4 text-center">
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold">Bienvenue chez Horizon Moto</h1>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold">Bienvenue Chez Horizon Moto</h1>
                 <p class="text-xs sm:text-sm lg:text-base max-w-xl">
                     Rendez-nous visite à Saint-Ouen-l'Aumône et découvrez un lieu 100% dédié aux motards.
                 </p>
@@ -59,22 +59,24 @@
         <section class="relative flex w-full h-16 sm:h-20 p-4 sm:p-6 overflow-hidden mt-5 bg-white/30">
             <div class="flex animate-marquee whitespace-nowrap">
                 <img src="{{ asset('img/ESPACEK.jpg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
-                <img src="{{ asset('img/honda.svg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
+                <img src="{{ asset('img/honda.png') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
                 <img src="{{ asset('img/maxess.png') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
                 <img src="{{ asset('img/MOTOPLEX.jpg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
                 <img src="{{ asset('img/suzuki.svg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
+                <img src="{{ asset('img/ktm.jpg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
                 <!-- Copie pour effet infini -->
                 <img src="{{ asset('img/ESPACEK.jpg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
-                <img src="{{ asset('img/honda.svg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
+                <img src="{{ asset('img/honda.png') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
                 <img src="{{ asset('img/maxess.png') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
                 <img src="{{ asset('img/MOTOPLEX.jpg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
                 <img src="{{ asset('img/suzuki.svg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
+                <img src="{{ asset('img/ktm.jpg') }}" class="h-full mx-4 sm:mx-6 inline-block" alt="">
             </div>
         </section>
 
         <!-- Produits -->
         <section class="flex flex-col w-full h-full px-4 sm:px-10 py-10 sm:py-16 bg-gray-800 text-white">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 text-center">Nos Produits</h2>
+            <h2 class="text-2xl sm:text-3xl font-bold mb-8 sm:mb-10 text-center">Nos Produits du Moment</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 @forelse($produits as $produit)

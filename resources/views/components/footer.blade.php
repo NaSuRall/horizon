@@ -1,5 +1,5 @@
 <footer class="bg-gray-900 text-gray-300 px-10 py-12 mt-10">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- Bloc 1 : Logo / Présentation -->
         <div>
             <img class="w-30 mb-4" src="{{ asset('img/horizonmoto.png') }}" alt="">
@@ -23,6 +23,21 @@
                 <li><a href="" class=" text-gray-600 transition text-sm">Visite 3d</a></li>
             </ul>
         </div>
+
+
+        <!-- Bloc 3 : Marques partenaires -->
+        <div>
+            <h3 class="text-xl font-bold text-white mb-4">Marques partenaires</h3>
+            <ul class="space-y-2 text-sm">
+                <li><a href="https://www.horizonrc.fr/" target="_blank" class="hover:text-red-500">Horizon Racing Cergy (95) </a></li>
+                <li><a href="https://moto.suzuki.fr/" target="_blank" class="hover:text-red-500">Suzuki</a></li>
+                <li><a href="https://www.ktm.com/fr-fr.html" target="_blank" class="hover:text-red-500">KTM</a></li>
+                <li><a href="https://www.motoplex-piaggio.com/" target="_blank" class="hover:text-red-500">Motoplex</a></li>
+                <li><a href="https://www.espacek.com/" target="_blank" class="hover:text-red-500">Espace K (Kawasaki)</a></li>
+                <li><a href="https://www.maxxess.fr/" target="_blank" class="hover:text-red-500">Maxxess</a></li>
+            </ul>
+        </div>
+
 
         <!-- Bloc 3 : Réseaux sociaux -->
         <div>
