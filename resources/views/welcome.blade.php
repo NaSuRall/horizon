@@ -123,10 +123,12 @@
                 <div class="flex flex-wrap gap-4 mt-4">
                     <a href="{{ env('FACKBOOK_LINK') }}" target="_blank"
                        class="px-3 sm:px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition flex items-center gap-2 text-xs sm:text-sm">
+                        <i class="fa-brands fa-facebook"></i>
                         Facebook
                     </a>
                     <a href="{{ env('INSTA_LINK') }}" target="_blank"
                        class="px-3 sm:px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition flex items-center gap-2 text-xs sm:text-sm">
+                        <i class="fa-brands fa-instagram text-white"></i>
                         Instagram
                     </a>
                 </div>
