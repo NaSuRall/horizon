@@ -30,7 +30,7 @@
                     </li>
                     <li class="flex items-center gap-3">
                         <i class="fa-solid fa-envelope text-white text-lg"></i>
-                        renaud@maxxess.paris
+                        maxxesscergy@gmail.com
                     </li>
                     <li class="flex items-center gap-3">
                         <p class="text-sm sm:text-base">

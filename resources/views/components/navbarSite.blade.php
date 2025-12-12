@@ -16,7 +16,7 @@
 
     <!-- Téléphone (desktop uniquement) -->
     <div class="hidden md:flex items-center text-white">
-        <span class="text-sm hover:scale-110 transition">01 39 09 96 16</span>
+        <span class="text-sm hover:scale-110 transition">01 39 09 08 98</span>
     </div>
 
     <!-- Bouton burger (mobile) -->

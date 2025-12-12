@@ -19,7 +19,7 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        Mail::to('doctohrlibe@romain-poulain.fr')->send(new ContactFormMail($data));
+        Mail::to('maxxesscergy@gmail.com')->send(new ContactFormMail($data));
 
         return back()->with('success', 'Votre message a été envoyé avec succès !');
     }
