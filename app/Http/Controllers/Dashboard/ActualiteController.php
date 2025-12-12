@@ -40,9 +40,11 @@ class ActualiteController extends Controller
 
     }
 
-    public function delete()
+    public function delete($id)
     {
-
+        $actualites = Actualite::findOrFail($id);
+        $actualites->delete();
+        return redirect()->route('actualite.index', $actualites);
     }
 
 

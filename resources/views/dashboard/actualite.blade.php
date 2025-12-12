@@ -113,9 +113,9 @@
 
                         <!-- Champ contenu (textarea plus grand + limite 500 caractères) -->
                         <div>
-                <textarea name="contenu" placeholder="Contenu de l’actualité (max 500 caractères)"
-                          rows="6" maxlength="500"
-                          class="w-full border p-2 rounded-lg @error('contenu') border-red-500 @enderror">{{ old('contenu') }}</textarea>
+                            <textarea name="contenu" placeholder="Contenu de l’actualité (max 500 caractères)"
+                            rows="6" maxlength="500"
+                            class="w-full border p-2 rounded-lg @error('contenu') border-red-500 @enderror">{{ old('contenu') }}</textarea>
                             @error('contenu')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror

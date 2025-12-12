@@ -96,15 +96,35 @@
                              class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50"
                              onclick="this.classList.add('hidden')">
 
-                            <div class="relative" onclick="event.stopPropagation()">
+                            <div class="relative bg-white rounded-lg shadow-lg max-w-4xl w-full p-6 flex gap-6"
+                                 onclick="event.stopPropagation()">
+
                                 <!-- Bouton fermer -->
                                 <button onclick="document.getElementById('image-modal-{{ $produit->id }}').classList.add('hidden')"
-                                        class="absolute top-3 right-3 text-white text-2xl hover:text-gray-300">
+                                        class="absolute top-3 right-3 text-gray-600 hover:text-black text-2xl">
                                     <i class="fa-solid fa-x"></i>
                                 </button>
-                                <!-- Image en grand -->
-                                <img src="{{ asset('storage/' . $produit->image) }}" alt="{{ $produit->name }}"
-                                     class="max-h-[80vh] max-w-[90vw] rounded-lg shadow-lg">
+
+                                <!-- Colonne gauche : images -->
+                                <div class="flex-1 flex flex-col gap-4">
+                                    @foreach($produit->images ?? [$produit->image] as $img)
+                                        <img src="{{ asset('storage/' . $img) }}" alt="{{ $produit->name }}"
+                                             class="w-full h-full object-cover rounded-lg shadow">
+                                    @endforeach
+                                </div>
+
+                                <!-- Colonne droite : infos produit -->
+                                <div class="flex-1 flex flex-col justify-center">
+                                    <h2 class="text-2xl font-bold mb-2">{{ $produit->name }}</h2>
+                                    <p class="text-red-600 text-xl font-semibold mb-4">{{ $produit->price }} €</p>
+                                    <p class="text-gray-700 mb-4">{{ $produit->description }}</p>
+                                    <p class="text-sm text-gray-500 mb-2">Marque : {{ $produit->marque->name ?? '-' }}</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach($produit->categories as $cat)
+                                            <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded text-xs">{{ $cat->name }}</span>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endforeach

@@ -84,7 +84,7 @@ Route::middleware(['auth', 'is_admin'])->prefix('dashboard')->group(function () 
     Route::get('/actualites', [ActualiteController::class, 'index'])->name('actualite.index');
     Route::post('/actualites', [ActualiteController::class, 'store'])->name('actualites.store');
     Route::put('/actualites/{actualite}', [ActualiteController::class, 'update'])->name('actualites.update');
-    Route::delete('/actualites/{actualite}', [ActualiteController::class, 'delete'])->name('actualites.delete');
+    Route::get('/actualites/{id}', [ActualiteController::class, 'delete'])->name('actualites.delete');
 
 
 });
