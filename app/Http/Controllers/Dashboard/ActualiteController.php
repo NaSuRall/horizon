@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Actions\Actualite\StoreActualiteAction;
+use App\Actions\Actualite\UpdateActualiteAction;
 use App\Actions\Produit\StoreProduitAction;
 use App\DTOs\ActualiteDTO;
 use App\DTOs\ProduitDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ActualiteUpdateRequest;
 use App\Http\Requests\ArticleRequest;
 use App\Models\Actualite;
 use Illuminate\Http\Request;
@@ -35,9 +37,12 @@ class ActualiteController extends Controller
         return redirect()->route('actualite.index')->with('success', 'Produit créé avec succès');
     }
 
-    public function update()
+    public function update(ActualiteUpdateRequest $request, Actualite $actualite, UpdateActualiteAction $action)
     {
+        $dto = ActualiteDTO::formRequest($request);
+        $actualites = $action->execute($actualite, $dto);
 
+        return redirect()->route('actualite.index', ['actualites' => $actualites]);
     }
 
     public function delete($id)

@@ -17,7 +17,7 @@
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col hover:shadow-xl transition-shadow duration-300">
                     <!-- Image -->
                     @if($actu->image)
-                        <img src="{{ asset('storage/'.$actu->image) }}" alt="{{ $actu->titre }}" class="h-48 w-full object-cover">
+                        <img src="{{ asset('storage/'.$actu->image) }}" alt="{{ $actu->titre }}" class="h-full w-full object-cover">
                     @else
                         <div class="h-48 w-full bg-gray-300 flex items-center justify-center text-gray-600">
                             <i class="fa-solid fa-newspaper text-4xl"></i>
@@ -52,7 +52,7 @@
 
                         <!-- Image -->
                         @if($actu->image)
-                            <img src="{{ asset('storage/'.$actu->image) }}" alt="{{ $actu->titre }}" class="w-full h-64 object-cover rounded mb-4">
+                            <img src="{{ asset('storage/'.$actu->image) }}" alt="{{ $actu->titre }}" class="w-full h-full object-cover rounded mb-4">
                         @endif
 
                         <!-- Contenu complet -->

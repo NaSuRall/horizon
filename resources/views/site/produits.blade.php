@@ -118,8 +118,10 @@
                                     <h2 class="text-2xl font-bold mb-2">{{ $produit->name }}</h2>
                                     <p class="text-red-600 text-xl font-semibold mb-4">{{ $produit->price }} €</p>
                                     <p class="text-gray-700 mb-4">{{ $produit->description }}</p>
+                                    <p class="text-gray-600 mb-4 text-sm">Référence :{{ $produit->ref }}</p>
                                     <p class="text-sm text-gray-500 mb-2">Marque : {{ $produit->marque->name ?? '-' }}</p>
-                                    <div class="flex flex-wrap gap-2">
+
+                                    <div class="flex flex-wrap  gap-2">
                                         @foreach($produit->categories as $cat)
                                             <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded text-xs">{{ $cat->name }}</span>
                                         @endforeach
@@ -135,6 +137,7 @@
                     {{ $produits->links() }}
                 </div>
             </main>
+
         </section>
     </div>
 

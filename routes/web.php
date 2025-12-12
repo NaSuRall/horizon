@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\CategorieController;
 use App\Http\Controllers\Dashboard\MarqueController;
 use App\Http\Controllers\Dashboard\MemberController;
 use App\Http\Controllers\Dashboard\ProduitController;
+use App\Http\Controllers\Dashboard\SocialController;
 use App\Models\Produit;
 use Illuminate\Support\Facades\Route;
 
@@ -87,4 +88,9 @@ Route::middleware(['auth', 'is_admin'])->prefix('dashboard')->group(function () 
     Route::get('/actualites/{id}', [ActualiteController::class, 'delete'])->name('actualites.delete');
 
 
+    // Social
+    Route::get('/social', [SocialController::class, 'index'])->name('social.index');
+    Route::post('/social', [SocialController::class, 'store'])->name('socials.store');
+    Route::put('/social/{social}', [SocialController::class, 'update'])->name('socials.update');
+    Route::delete('/social/{social}', [SocialController::class, 'destroy'])->name('socials.delete');
 });

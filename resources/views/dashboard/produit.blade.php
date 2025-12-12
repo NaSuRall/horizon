@@ -55,40 +55,6 @@
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
 
-                                <!-- Modal Edit -->
-                                <div id="modal-{{ $produit->id }}" class="hidden fixed inset-0 bg-black/40 flex text-black items-center justify-center z-50">
-                                    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative">
-                                        <button
-                                            onclick="document.getElementById('modal-{{ $produit->id }}').classList.add('hidden')"
-                                            class="absolute top-3 right-3 text-gray-600 hover:text-black">
-                                            <i class="fa-solid fa-x"></i>
-                                        </button>
-                                        <h2 class="text-xl font-semibold mb-4">Modifier le produit</h2>
-                                        <form action="{{  route('produits.update', $produit->id)  }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-                                            @csrf
-                                            @method('PUT')
-                                            <input type="text" name="name" value="{{ $produit->name }}" class="w-full border p-2 rounded-lg"/>
-                                            <textarea name="description" class="w-full border p-2 rounded-lg">{{ $produit->description }}</textarea>
-                                            <input type="text" name="ref" value="{{ $produit->ref }}" class="w-full border p-2 rounded-lg"/>
-                                            <input type="number" step="0.01" name="price" value="{{ $produit->price }}" class="w-full border p-2 rounded-lg"/>
-                                            <input type="file" name="image" class="w-full border p-2 rounded-lg"/>
-                                            <select name="marque_id" class="w-full border p-2 rounded-lg">
-                                                @foreach($marques as $marque)
-                                                    <option value="{{ $marque->id }}" @if($produit->marque_id == $marque->id) selected @endif>{{ $marque->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <select name="categories[]" multiple class="w-full border p-2 rounded-lg">
-                                                @foreach($categories as $cat)
-                                                    <option value="{{ $cat->id }}" @if($produit->categories->contains($cat->id)) selected @endif>{{ $cat->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <button type="submit" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800">
-                                                Modifier
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
-
                                 <!-- Delete -->
                                 <form action="{{ route('produits.delete', $produit->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer ce produit ?');">
                                     @csrf
@@ -173,6 +139,46 @@
                     </form>
                 </div>
             </div>
+
+            <!-- Modal Modifier Produit -->
+            <div id="modal-{{ $produit->id }}" class="hidden fixed inset-0 bg-black/40 flex text-black items-center justify-center z-50">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative">
+                    <button
+                        onclick="document.getElementById('modal-{{ $produit->id }}').classList.add('hidden')"
+                        class="absolute top-3 right-3 text-gray-600 hover:text-black">
+                        <i class="fa-solid fa-x"></i>
+                    </button>
+                    <h2 class="text-xl font-semibold mb-4">Modifier le produit</h2>
+                    <form action="{{  route('produits.update', $produit->id)  }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                        @csrf
+                        @method('PUT')
+                        <input type="text" name="name" value="{{ $produit->name }}" class="w-full border p-2 rounded-lg"/>
+                        <textarea name="description" class="w-full border p-2 rounded-lg">{{ $produit->description }}</textarea>
+                        <input type="text" name="ref" value="{{ $produit->ref }}" class="w-full border p-2 rounded-lg"/>
+                        <input type="number" step="0.01" name="price" value="{{ $produit->price }}" class="w-full border p-2 rounded-lg"/>
+                        <input type="file" name="image" class="w-full border p-2 rounded-lg"/>
+                        <select name="marque_id" class="w-full border p-2 rounded-lg">
+                            @foreach($marques as $marque)
+                                <option value="{{ $marque->id }}" @if($produit->marque_id == $marque->id) selected @endif>{{ $marque->name }}</option>
+                            @endforeach
+                        </select>
+
+                        <label class="block text-sm font-medium text-gray-700">Catégories</label>
+                        <div class="flex flex-col gap-2 max-h-40 overflow-y-auto border rounded-lg p-2">
+                            @foreach($categories as $cat)
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" name="categories[]" value="{{ $cat->id }}" class="form-checkbox h-4 w-4 text-blue-600">
+                                    <span class="ml-2">{{ $cat->name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                        <button type="submit" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800">
+                            Modifier
+                        </button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </section>
 @endsection

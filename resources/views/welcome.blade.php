@@ -19,7 +19,7 @@
                     <!-- Image -->
                     @if($lastActu->image)
                         <img src="{{ asset('storage/'.$lastActu->image) }}" alt="{{ $lastActu->titre }}"
-                             class="w-full h-64 object-cover rounded mb-4">
+                             class="w-full h-full object-cover rounded mb-4">
                     @endif
 
                     <!-- Contenu -->
