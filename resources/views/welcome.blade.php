@@ -81,7 +81,9 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 @forelse($produits as $produit)
                     <div class="bg-gray-900 rounded-xl shadow-lg overflow-hidden flex flex-col">
-                        <img src="{{ asset('storage/' . $produit->image) }}" alt="{{ $produit->name }}" class="w-full h-48 sm:h-64 object-cover">
+                        <img
+                            onclick="document.getElementById('image-modal-{{ $produit->id }}').classList.remove('hidden')"
+                            src="{{ asset('storage/' . $produit->image) }}" alt="{{ $produit->name }}" class="cursor-pointer w-full h-48 sm:h-96 object-cover">
                         <div class="p-4 sm:p-6 flex flex-col flex-grow">
                             <h3 class="text-lg sm:text-xl font-semibold mb-2">{{ $produit->name }}</h3>
                             <p class="text-xs sm:text-sm text-gray-400 mb-1">{{ $produit->ref }}</p>
@@ -89,6 +91,23 @@
                             <a href="{{ route('site.show.produits') }}" class="mt-auto px-3 sm:px-4 py-2 text-center bg-red-600 rounded-lg hover:bg-red-700 transition text-xs sm:text-sm">
                                 En savoir plus
                             </a>
+                        </div>
+                    </div>
+
+                    <!-- Modal image -->
+                    <div id="image-modal-{{ $produit->id }}"
+                         class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+                         onclick="this.classList.add('hidden')">
+
+                        <div class="relative" onclick="event.stopPropagation()">
+                            <!-- Bouton fermer -->
+                            <button onclick="document.getElementById('image-modal-{{ $produit->id }}').classList.add('hidden')"
+                                    class="absolute top-3 right-3 text-white text-2xl hover:text-gray-300">
+                                <i class="fa-solid fa-x"></i>
+                            </button>
+                            <!-- Image en grand -->
+                            <img src="{{ asset('storage/' . $produit->image) }}" alt="{{ $produit->name }}"
+                                 class="max-h-[80vh] max-w-[90vw] rounded-lg shadow-lg">
                         </div>
                     </div>
                 @empty

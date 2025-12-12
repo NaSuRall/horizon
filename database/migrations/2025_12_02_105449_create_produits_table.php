@@ -15,7 +15,7 @@ return new class extends Migration
             $table->engine('InnoDB');
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->longText('description');
             $table->string('image');
             $table->decimal('price');
             $table->string("ref")->unique();

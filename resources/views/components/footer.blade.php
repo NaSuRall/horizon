@@ -32,8 +32,8 @@
                 <li><a href="https://www.horizonrc.fr/" target="_blank" class="hover:text-red-500">Horizon Racing Cergy (95) </a></li>
                 <li><a href="https://moto.suzuki.fr/" target="_blank" class="hover:text-red-500">Suzuki</a></li>
                 <li><a href="https://www.ktm.com/fr-fr.html" target="_blank" class="hover:text-red-500">KTM</a></li>
-                <li><a href="https://www.motoplex-piaggio.com/" target="_blank" class="hover:text-red-500">Motoplex</a></li>
-                <li><a href="https://www.espacek.com/" target="_blank" class="hover:text-red-500">Espace K (Kawasaki)</a></li>
+                <li><a href="https://motoplex.fr/" target="_blank" class="hover:text-red-500">Motoplex</a></li>
+                <li><a href="https://www.kawasaki.fr/fr/products?fromMobile=true" target="_blank" class="hover:text-red-500">Espace K (Kawasaki)</a></li>
                 <li><a href="https://www.maxxess.fr/" target="_blank" class="hover:text-red-500">Maxxess</a></li>
             </ul>
         </div>

@@ -27,7 +27,6 @@
                     <thead>
                     <tr>
                         <th class="p-3 text-center font-semibold bg-gray-900 text-white">Nom</th>
-                        <th class="p-3 text-center font-semibold bg-gray-900 text-white">Description</th>
                         <th class="p-3 text-center font-semibold bg-gray-900 text-white">Ref</th>
                         <th class="p-3 text-center font-semibold bg-gray-900 text-white">Prix</th>
                         <th class="p-3 text-center font-semibold bg-gray-900 text-white">Marque</th>
@@ -40,7 +39,6 @@
                     @foreach($produits as $produit)
                         <tr class="bg-gray-800 text-white">
                             <td class="p-3 text-center">{{ $produit->name }}</td>
-                            <td class="p-3 text-center">{{ $produit->description }}</td>
                             <td class="p-3 text-center">{{ $produit->ref }}</td>
                             <td class="p-3 text-center">{{ $produit->price }} €</td>
                             <td class="p-3 text-center">{{ $produit->marque->name ?? '-' }}</td>
