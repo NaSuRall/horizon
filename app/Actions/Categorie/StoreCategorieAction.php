@@ -12,6 +12,7 @@ class StoreCategorieAction
     public static function execute(CategorieDTO $dto): Categorie{
         $categorie = Categorie::create([
             'name'=> $dto->name,
+            'parent_id' => $dto->parent_id,
         ]);
 
         Activity::create([

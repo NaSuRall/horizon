@@ -9,7 +9,20 @@ class Categorie extends Model
 
     protected $table = 'categories';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name, parent_id',
+        'name',
+        'parent_id'
+    ];
+
+    public function children()
+    {
+        return $this->hasMany(Categorie::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Categorie::class, 'parent_id');
+    }
 
     public function marques()
     {

@@ -57,7 +57,7 @@ class ProduitController extends Controller
     {
         $produits = Produit::paginate(9);
         $marques = Marque::all();
-        $categories = Categorie::all();
+        $categories = Categorie::with('parent')->get();
         return view('dashboard.produit', compact('produits', 'marques', 'categories'));
     }
 

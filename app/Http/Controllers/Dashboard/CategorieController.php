@@ -21,27 +21,35 @@ class CategorieController extends Controller
 {
     public function index()
     {
-        $categories = Categorie::paginate(9);
-        return view('dashboard.categorie', compact('categories'));
+        // Pour le tableau (uniquement les parents)
+        $categories = Categorie::whereNull('parent_id')
+            ->with('children')
+            ->paginate(10);
+
+        // Pour les selects (liste des parents possibles)
+        $parents = Categorie::whereNull('parent_id')->get();
+        $allCategories = Categorie::all();
+
+        return view('dashboard.categorie', compact('categories', "parents", 'allCategories'));
     }
 
     public function store(CategorieRequest $request, StoreCategorieAction $categorieAction)
     {
         $dto = CategorieDTO::formRequest($request);
         $categories = $categorieAction->execute($dto);
-        return redirect()->route('categories.index', ['categories' => $categories]);
+        return redirect()->route('categories.index', ['categories' => $categories])->with('success', 'Catégorie créée');
     }
 
     public function update(CategorieUpdateRequest $request, UpdateCategorieAction $action, Categorie $categorie ){
         $dto = CategorieDTO::formRequest($request);
         $categories = $action->execute($dto, $categorie);
-        return redirect()->route('categories.index', ['categories' => $categories]);
+        return redirect()->route('categories.index', ['categories' => $categories])->with('success', 'Catégorie mis a jour');
     }
 
     public function destroy($id){
         $categorie = Categorie::findOrFail($id);
         $categorie->delete();
-        return redirect()->route('categories.index', ['categories' => $categorie]);
+        return redirect()->route('categories.index', ['categories' => $categorie])->with('success', 'Catégorie supprimer');
     }
 
 }

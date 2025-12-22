@@ -15,6 +15,7 @@ return new class extends Migration
             $table->engine('InnoDB');
             $table->id();
             $table->string('name');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
         });
