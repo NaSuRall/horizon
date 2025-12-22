@@ -4,6 +4,7 @@ namespace App\Actions\Produit;
 
 use App\DTOs\ProduitDTO;
 use App\Models\Activity;
+use App\Models\Categorie;
 use App\Models\Produit;
 
 class UpdateProduitAction
@@ -32,17 +33,31 @@ class UpdateProduitAction
         $produit->save();
 
         if (!empty($dto->categories)) {
-            $produit->categories()->sync($dto->categories);
+
+            $categories = collect($dto->categories)
+                ->flatMap(function ($catId) {
+                    $cat = Categorie::find($catId);
+
+                    // si sous-catégorie → ajouter aussi le parent
+                    if ($cat && $cat->parent_id) {
+                        return [$catId, $cat->parent_id];
+                    }
+
+                    return [$catId];
+                })
+                ->unique()
+                ->values();
+
+            $produit->categories()->sync($categories);
         }
 
         Activity::create([
             'type' => 'Produit',
             'action' => 'Update',
             'user_id' => auth()->id(),
-            'description' => "{$produit->name} crée"
+            'description' => "{$produit->name} modifié"
         ]);
 
         return $produit;
-
     }
 }

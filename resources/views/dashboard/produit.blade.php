@@ -67,36 +67,69 @@
                         </tr>
                         <!-- Modal Modifier Produit -->
                         <div id="modal-{{ $produit->id }}" class="hidden fixed inset-0 bg-black/40 flex text-black items-center justify-center z-50">
-                            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative">
+                            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative max-h-[90vh] overflow-y-auto">
+
                                 <button
                                     onclick="document.getElementById('modal-{{ $produit->id }}').classList.add('hidden')"
                                     class="absolute top-3 right-3 text-gray-600 hover:text-black">
                                     <i class="fa-solid fa-x"></i>
                                 </button>
+
                                 <h2 class="text-xl font-semibold mb-4">Modifier le produit</h2>
-                                <form action="{{  route('produits.update', $produit->id)  }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+
+                                <form action="{{ route('produits.update', $produit->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                                     @csrf
                                     @method('PUT')
+
+                                    <!-- Nom -->
                                     <input type="text" name="name" value="{{ $produit->name }}" class="w-full border p-2 rounded-lg"/>
+
+                                    <!-- Description -->
                                     <textarea name="description" class="w-full border p-2 rounded-lg">{{ $produit->description }}</textarea>
+
+                                    <!-- Référence -->
                                     <input type="text" name="ref" value="{{ $produit->ref }}" class="w-full border p-2 rounded-lg"/>
+
+                                    <!-- Prix -->
                                     <input type="number" step="0.01" name="price" value="{{ $produit->price }}" class="w-full border p-2 rounded-lg"/>
+
+                                    <!-- Image -->
                                     <input type="file" name="image" class="w-full border p-2 rounded-lg"/>
+
+                                    <!-- Marque -->
                                     <select name="marque_id" class="w-full border p-2 rounded-lg">
                                         @foreach($marques as $marque)
-                                            <option value="{{ $marque->id }}" @if($produit->marque_id == $marque->id) selected @endif>{{ $marque->name }}</option>
+                                            <option value="{{ $marque->id }}" @selected($produit->marque_id == $marque->id)>
+                                                {{ $marque->name }}
+                                            </option>
                                         @endforeach
                                     </select>
 
+                                    <!-- Catégories -->
                                     <label class="block text-sm font-medium text-gray-700">Catégories</label>
+
                                     <div class="flex flex-col gap-2 max-h-40 overflow-y-auto border rounded-lg p-2">
-                                        @foreach($categories as $cat)
-                                            <label class="inline-flex items-center">
-                                                <input type="checkbox" name="categories[]" value="{{ $cat->id }}" class="form-checkbox h-4 w-4 text-blue-600">
-                                                <span class="ml-2">{{ $cat->name }}</span>
-                                            </label>
+
+                                        @foreach($categories->where('parent_id', null) as $cat)
+                                            <div>
+                                                <!-- Checkbox catégorie parente -->
+                                                <label class="inline-flex items-center">
+                                                    <input type="checkbox"
+                                                           class="category-checkbox-{{ $produit->id }} h-4 w-4 text-blue-600"
+                                                           data-id="{{ $cat->id }}"
+                                                           name="categories[]"
+                                                           value="{{ $cat->id }}"
+                                                        @checked($produit->categories->contains($cat->id))>
+                                                    <span class="ml-2 font-semibold">{{ $cat->name }}</span>
+                                                </label>
+
+                                                <!-- Sous-catégories dynamiques -->
+                                                <div id="subcats-{{ $produit->id }}-{{ $cat->id }}" class="ml-6 mt-2 hidden flex flex-col gap-1"></div>
+                                            </div>
                                         @endforeach
+
                                     </div>
+
                                     <button type="submit" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800">
                                         Modifier
                                     </button>
@@ -181,9 +214,6 @@
                             @endforeach
 
                         </div>
-
-
-
                         <!-- Submit -->
                         <button type="submit" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800">
                             Créer
@@ -234,5 +264,56 @@
                 container.classList.remove('hidden');
             });
         });
+
+
+        function initCategoryLogicForProduct(productId) {
+
+            document.querySelectorAll('.category-checkbox-' + productId).forEach(checkbox => {
+
+                const parentId = checkbox.dataset.id;
+                const container = document.getElementById('subcats-' + productId + '-' + parentId);
+
+                function renderSubcategories() {
+                    const subs = subcategoriesByParent[parentId] || [];
+
+                    if (!checkbox.checked) {
+                        container.innerHTML = '';
+                        container.classList.add('hidden');
+                        return;
+                    }
+
+                    container.innerHTML = subs.map(sub => `
+                <label class="inline-flex items-center">
+                    <input type="checkbox"
+                           name="categories[]"
+                           value="${sub.id}"
+                           class="form-checkbox h-4 w-4 text-blue-600"
+                           ${window.preselectedCategories[productId]?.includes(sub.id) ? 'checked' : ''}>
+                    <span class="ml-2">${sub.name}</span>
+                </label>
+            `).join('');
+
+                    container.classList.remove('hidden');
+                }
+
+                // Quand on coche/décoche
+                checkbox.addEventListener('change', renderSubcategories);
+
+                // Si déjà coché → on affiche les sous-catégories
+                renderSubcategories();
+            });
+        }
+
+        // Préparer les catégories déjà liées
+        window.preselectedCategories = @json(
+    $produits->mapWithKeys(fn($p) => [$p->id => $p->categories->pluck('id')])
+);
+
+        // Initialiser chaque modal produit
+        @foreach($produits as $p)
+        initCategoryLogicForProduct({{ $p->id }});
+        @endforeach
+
     </script>
+
 @endsection
