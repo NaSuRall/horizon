@@ -20,6 +20,36 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-800">
+{{-- Messages globaux du Dashboard --}}
+<div class="max-w-4xl mx-auto mt-4">
+
+    {{-- Message de succès --}}
+    @if(session('success'))
+        <div class="mb-4 p-3 rounded bg-blue-500 text-white shadow z-2">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    {{-- Message d’erreur --}}
+    @if(session('error'))
+        <div class="mb-4 p-3 rounded bg-red-500 text-white shadow">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    {{-- Erreurs de validation --}}
+    @if ($errors->any())
+        <div class="mb-4 p-3 rounded bg-red-600 text-white shadow">
+            <strong>Veuillez corriger les erreurs suivantes :</strong>
+            <ul class="mt-2 list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+</div>
 <div id="app">
     <main class="">
         <div class="flex flex-row w-full h-screen">

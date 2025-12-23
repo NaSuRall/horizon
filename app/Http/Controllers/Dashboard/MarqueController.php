@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MarqueRequest;
 use App\Http\Requests\MarqueUpdateRequest;
 use App\Models\Marque;
-use Illuminate\Http\Request;
 
 class MarqueController extends Controller
 {
@@ -19,25 +18,59 @@ class MarqueController extends Controller
         return view('dashboard.marque', compact('marques'));
     }
 
-    public function update(MarqueUpdateRequest $request, UpdateMarqueAction $action, Marque $marque ){
-
-        $dto = MarqueDTO::formRequest($request);
-        $marques = $action->execute($dto, $marque);
-
-        return redirect()->route('marques.index', ['marques' => $marques]);
-
-    }
-
-    public function store(MarqueRequest $request, StoreMarqueAction $marqueAction)
+    public function store(MarqueRequest $request, StoreMarqueAction $action)
     {
-        $dto = MarqueDTO::formRequest($request);
-        $marques = $marqueAction->execute($dto);
-        return redirect()->route('marques.index', ['marques' => $marques]);
+        try {
+            $dto = MarqueDTO::formRequest($request);
+            $action->execute($dto);
+
+            return redirect()
+                ->route('marques.index')
+                ->with('success', 'Marque créée avec succès');
+
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Erreur lors de la création de la marque : ' . $e->getMessage());
+        }
     }
 
-    public function destroy($id){
-       $marque = Marque::findOrFail($id);
-       $marque->delete();
-       return redirect()->route('marques.index', ['marques' => $marque]);
+    public function update(MarqueUpdateRequest $request, UpdateMarqueAction $action, Marque $marque)
+    {
+        try {
+            $dto = MarqueDTO::formRequest($request);
+            $action->execute($dto, $marque);
+
+            return redirect()
+                ->route('marques.index')
+                ->with('success', 'Marque modifiée avec succès');
+
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Erreur lors de la modification de la marque : ' . $e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $marque = Marque::findOrFail($id);
+            $marque->delete();
+
+            return redirect()
+                ->route('marques.index')
+                ->with('success', 'Marque supprimée avec succès');
+
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->back()
+                ->with('error', 'Erreur lors de la suppression de la marque : ' . $e->getMessage());
+        }
     }
 }

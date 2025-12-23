@@ -9,38 +9,68 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MemberRequest;
 use App\Http\Requests\MemberUpdateRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    public function index(){
-
+    public function index()
+    {
         $members = User::paginate(9);
         return view('dashboard.member', ['members' => $members]);
     }
 
+    public function store(MemberRequest $request, StoreMemberAction $action)
+    {
+        try {
+            $dto = MemberDTO::formRequest($request);
+            $action->execute($dto);
 
-    public function store(MemberRequest $request, StoreMemberAction $action ){
+            return redirect()
+                ->route('members.index')
+                ->with('success', 'Membre créé avec succès');
 
-        $dto = MemberDTO::formRequest($request);
-        $members = $action->execute($dto);
+        } catch (\Exception $e) {
 
-        return redirect()->route('members.index', ['members' => $members]);
-
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Erreur lors de la création du membre : ' . $e->getMessage());
+        }
     }
 
     public function update(MemberUpdateRequest $request, UpdateMemberAction $action, User $member)
     {
-        $dto = MemberDTO::formRequest($request);
-        $members = $action->execute($dto , $member);
-        return redirect()->route('members.index', ['members' => $members]);
+        try {
+            $dto = MemberDTO::formRequest($request);
+            $action->execute($dto, $member);
+
+            return redirect()
+                ->route('members.index')
+                ->with('success', 'Membre modifié avec succès');
+
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Erreur lors de la modification du membre : ' . $e->getMessage());
+        }
     }
 
     public function destroy($id)
     {
-        $members = User::findOrFail($id);
-        $members->delete();
-        return redirect()->route('members.index', ['members' => $members]);
-    }
+        try {
+            $member = User::findOrFail($id);
+            $member->delete();
 
+            return redirect()
+                ->route('members.index')
+                ->with('success', 'Membre supprimé avec succès');
+
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->back()
+                ->with('error', 'Erreur lors de la suppression du membre : ' . $e->getMessage());
+        }
+    }
 }

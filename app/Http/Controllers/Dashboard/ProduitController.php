@@ -13,7 +13,6 @@ use App\Models\Marque;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 
-
 class ProduitController extends Controller
 {
     public function show(Request $request)
@@ -38,7 +37,7 @@ class ProduitController extends Controller
             $query->whereIn('marque_id', $request->marques);
         }
 
-        // Filtre catégories (relation many-to-many)
+        // Filtre catégories
         if ($request->filled('categories')) {
             $query->whereHas('categories', function ($q) use ($request) {
                 $q->whereIn('categories.id', $request->categories);
@@ -46,7 +45,6 @@ class ProduitController extends Controller
         }
 
         $produits = $query->paginate(12);
-
         $marques = Marque::all();
         $categories = Categorie::all();
 
@@ -58,34 +56,66 @@ class ProduitController extends Controller
         $produits = Produit::paginate(9);
         $marques = Marque::all();
         $categories = Categorie::with('parent')->get();
+
         return view('dashboard.produit', compact('produits', 'marques', 'categories'));
     }
 
     // store
     public function store(ProduitRequest $request, StoreProduitAction $action)
     {
-        $dto = ProduitDTO::formRequest($request);
-        $produit = $action->execute($dto);
+        try {
+            $dto = ProduitDTO::formRequest($request);
+            $action->execute($dto);
 
-        return redirect()->route('produits.index')->with('success', 'Produit créé avec succès');
+            return redirect()
+                ->route('produits.index')
+                ->with('success', 'Produit créé avec succès');
+
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Erreur lors de la création du produit : ' . $e->getMessage());
+        }
     }
 
     // update
     public function update(ProduitUpdateRequest $request, UpdateProduitAction $action, Produit $produit)
     {
-        $dto = ProduitDTO::formRequest($request);
-        $produit = $action->execute($dto, $produit);
+        try {
+            $dto = ProduitDTO::formRequest($request);
+            $action->execute($dto, $produit);
 
-        return redirect()->route('produits.index')->with('success', 'Produit modifié avec succès');
+            return redirect()
+                ->route('produits.index')
+                ->with('success', 'Produit modifié avec succès');
 
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Erreur lors de la modification du produit : ' . $e->getMessage());
+        }
     }
 
     // delete
     public function destroy($id)
     {
-        $produit = Produit::findOrFail($id);
-        $produit->delete();
+        try {
+            $produit = Produit::findOrFail($id);
+            $produit->delete();
 
-        return redirect()->route('produits.index')->with('success', 'Produit supprimé avec succès');
+            return redirect()
+                ->route('produits.index')
+                ->with('success', 'Produit supprimé avec succès');
+
+        } catch (\Exception $e) {
+
+            return redirect()
+                ->back()
+                ->with('error', 'Erreur lors de la suppression du produit : ' . $e->getMessage());
+        }
     }
 }

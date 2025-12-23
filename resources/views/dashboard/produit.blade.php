@@ -78,21 +78,25 @@
 
                                 <h2 class="text-xl font-semibold mb-4">Modifier le produit</h2>
 
-                                <form action="{{ route('produits.update', $produit->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                                <form action="{{ route('produits.update', $produit->id) }}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-6">
                                     @csrf
                                     @method('PUT')
 
                                     <input type="hidden" name="categories_force" value="1">
 
                                     <!-- Nom -->
+                                    <label for="images" class="block text-sm font-medium text-gray-700">Nom</label>
                                     <input type="text" name="name" value="{{ $produit->name }}" class="w-full border p-2 rounded-lg"/>
 
                                     <!-- Description -->
+                                    <label for="images" class="block text-sm font-medium text-gray-700">Description</label>
                                     <textarea name="description" class="w-full border p-2 rounded-lg">{{ $produit->description }}</textarea>
 
                                     <!-- Référence -->
+                                    <label for="images" class="block text-sm font-medium text-gray-700">Reference</label>
                                     <input type="text" name="ref" value="{{ $produit->ref }}" class="w-full border p-2 rounded-lg"/>
 
+                                    <label for="images" class="block text-sm font-medium text-gray-700">Prix</label>
                                     <!-- Prix -->
                                     <input type="number" step="0.01" name="price" value="{{ $produit->price }}" class="w-full border p-2 rounded-lg"/>
 
@@ -100,7 +104,7 @@
                                     <label for="images" class="block text-sm font-medium text-gray-700">Images (max 4)</label>
                                     <input type="file" id="images" name="images[]" class="w-full border p-2 rounded-lg" multiple accept="image/*"/>
 
-
+                                    <label for="images" class="block text-sm font-medium text-gray-700">Marque</label>
                                     <!-- Marque -->
                                     <select name="marque_id" class="w-full border p-2 rounded-lg">
                                         @foreach($marques as $marque)
