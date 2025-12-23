@@ -97,7 +97,9 @@
                                     <input type="number" step="0.01" name="price" value="{{ $produit->price }}" class="w-full border p-2 rounded-lg"/>
 
                                     <!-- Image -->
-                                    <input type="file" name="image" class="w-full border p-2 rounded-lg"/>
+                                    <label for="images" class="block text-sm font-medium text-gray-700">Images (max 4)</label>
+                                    <input type="file" id="images" name="images[]" class="w-full border p-2 rounded-lg" multiple accept="image/*"/>
+
 
                                     <!-- Marque -->
                                     <select name="marque_id" class="w-full border p-2 rounded-lg">
@@ -174,8 +176,8 @@
                         <input type="number" step="0.01" id="price" name="price" placeholder="Prix" class="w-full border p-2 rounded-lg"/>
 
                         <!-- Image -->
-                        <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
-                        <input type="file" id="image" name="image" class="w-full border p-2 rounded-lg"/>
+                        <label for="images" class="block text-sm font-medium text-gray-700">Images (max 4)</label>
+                        <input type="file" id="images" name="images[]" class="w-full border p-2 rounded-lg" multiple accept="image/*"/>
 
                         <!-- Marque -->
                         <label for="marque_id" class="block text-sm font-medium text-gray-700">Marque</label>

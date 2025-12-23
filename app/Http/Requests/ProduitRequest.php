@@ -26,7 +26,8 @@ class ProduitRequest extends FormRequest
             'description' => 'nullable|string',
             'ref' => 'required|string|unique:produits,ref',
             'price' => 'required|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'images' => 'required|array|max:4',
+            'images.*' => 'image|mimes:jpg,jpeg,png,webp|max:2048',
             'marque_id' => 'required|exists:marque,id', // 👈 table au singulier
             'categories' => 'array',
             'categories.*' => 'exists:categories,id',

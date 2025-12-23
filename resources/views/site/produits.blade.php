@@ -78,8 +78,12 @@
                         <div class="bg-gray-800 text-white rounded-lg shadow p-4 flex flex-col cursor-pointer"
                              onclick="document.getElementById('image-modal-{{ $produit->id }}').classList.remove('hidden')">
 
-                            <img src="{{ asset('storage/' . $produit->image) }}" alt="{{ $produit->name }}"
-                                 class="w-full h-full object-cover rounded mb-3">
+                            <img
+                                src="{{ $produit->images->isNotEmpty()
+                                ? asset('storage/' . $produit->images->first()->path)
+                                : asset('images/default.jpg') }}"
+                                alt="{{ $produit->name }}"
+                                class="w-full h-full object-cover rounded mb-3">
 
                             <h3 class="text-lg font-semibold">{{ $produit->name }}</h3>
                             <p class="mt-2 font-bold text-red-500">{{ $produit->price }} €</p>
@@ -91,31 +95,42 @@
                             </div>
                         </div>
 
-                        <!-- Modal image -->
+                        @php
+                            $imageUrls = $produit->images->map(fn($img) => asset('storage/' . $img->path))->toArray();
+                        @endphp
+
+                            <!-- Modal image -->
                         <div id="image-modal-{{ $produit->id }}"
                              class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50"
                              onclick="this.classList.add('hidden')">
 
-                            <div class="relative bg-white rounded-lg shadow-lg max-w-4xl w-full p-6 flex gap-6"
+                            <div class="relative bg-white rounded-lg shadow-lg max-w-4xl w-full max-h-[90vh] p-6 flex gap-6 overflow-hidden"
                                  onclick="event.stopPropagation()">
 
-                                <!-- Bouton fermer -->
+
+                            <!-- Bouton fermer -->
                                 <button onclick="document.getElementById('image-modal-{{ $produit->id }}').classList.add('hidden')"
                                         class="absolute top-3 right-3 text-gray-600 hover:text-black text-2xl">
                                     <i class="fa-solid fa-x"></i>
                                 </button>
 
                                 <!-- Colonne gauche : images -->
-                                <div class="flex-1 flex flex-col gap-4">
-                                    @foreach($produit->images ?? [$produit->image] as $img)
-                                        <img src="{{ asset('storage/' . $img) }}" alt="{{ $produit->name }}"
-                                             class="w-full h-full object-cover rounded-lg shadow">
+                                <div class="w-full h-[90vh] gap-3 space-y-4 overflow-scroll">
+                                    @foreach($imageUrls as $url)
+                                        <div class="w-full overflow-hidden rounded-lg">
+                                            <img
+                                                src="{{ $url }}"
+                                                class="w-full h-full object-cover cursor-pointer hover:scale-105 transition"
+                                            >
+                                        </div>
                                     @endforeach
                                 </div>
 
+
+
                                 <!-- Colonne droite : infos produit -->
-                                <div class="flex-1 flex flex-col justify-center">
-                                    <h2 class="text-2xl font-bold mb-2">{{ $produit->name }}</h2>
+                            <div class="w-1/2 flex flex-col overflow-y-auto max-h-[80vh]">
+                                <h2 class="text-2xl font-bold mb-2">{{ $produit->name }}</h2>
                                     <p class="text-red-600 text-xl font-semibold mb-4">{{ $produit->price }} €</p>
                                     <p class="text-gray-700 mb-4">{{ $produit->description }}</p>
                                     <p class="text-gray-600 mb-4 text-sm">Référence :{{ $produit->ref }}</p>

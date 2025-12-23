@@ -21,8 +21,13 @@ class StoreProduitAction
                 'price' => $dto->price,
                 'ref' => $dto->ref,
                 'marque_id' => $dto->marque_id,
-                'image' => $dto->imagePath,
             ]);
+
+            foreach ($dto->imagePaths as $path) {
+                $produit->images()->create([
+                    'path' => $path
+                ]);
+            }
 
             $categories = collect($dto->categories ?? [])
                 ->flatMap(function ($catId) {

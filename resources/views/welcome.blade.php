@@ -83,7 +83,12 @@
                     <div class="bg-gray-900 rounded-xl shadow-lg overflow-hidden flex flex-col">
                         <img
                             onclick="document.getElementById('image-modal-{{ $produit->id }}').classList.remove('hidden')"
-                            src="{{ asset('storage/' . $produit->image) }}" alt="{{ $produit->name }}" class="cursor-pointer w-full h-48 sm:h-96 object-cover">
+                            src="{{ $produit->images->isNotEmpty()
+                                    ? asset('storage/' . $produit->images->first()->path)
+                                    : asset('images/default.jpg') }}"
+                            alt="{{ $produit->name }}"
+                            class="cursor-pointer w-full h-48 sm:h-96 object-cover">
+
                         <div class="p-4 sm:p-6 flex flex-col flex-grow">
                             <h3 class="text-lg sm:text-xl font-semibold mb-2">{{ $produit->name }}</h3>
                             <p class="text-xs sm:text-sm text-gray-400 mb-1">{{ $produit->ref }}</p>
@@ -99,15 +104,23 @@
                          class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50"
                          onclick="this.classList.add('hidden')">
 
-                        <div class="relative" onclick="event.stopPropagation()">
+                        <div class="relative max-w-[90vw] max-h-[80vh] overflow-auto p-4 bg-gray-900 rounded-lg"
+                             onclick="event.stopPropagation()">
+
                             <!-- Bouton fermer -->
                             <button onclick="document.getElementById('image-modal-{{ $produit->id }}').classList.add('hidden')"
                                     class="absolute top-3 right-3 text-white text-2xl hover:text-gray-300">
                                 <i class="fa-solid fa-x"></i>
                             </button>
-                            <!-- Image en grand -->
-                            <img src="{{ asset('storage/' . $produit->image) }}" alt="{{ $produit->name }}"
-                                 class="max-h-[80vh] max-w-[90vw] rounded-lg shadow-lg">
+
+                            <!-- Galerie d’images -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                                @foreach($produit->images as $image)
+                                    <img src="{{ asset('storage/' . $image->path) }}"
+                                         class="rounded-lg shadow-lg object-cover w-full h-64">
+                                @endforeach
+                            </div>
+
                         </div>
                     </div>
                 @empty

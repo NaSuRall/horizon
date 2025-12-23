@@ -28,7 +28,8 @@ class ProduitUpdateRequest extends FormRequest
             'price'       => 'sometimes|numeric|min:0',
             'marque_id'   => 'sometimes|integer|exists:marque,id',
 
-            'image'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'images'   => 'nullable|array',
+            'images.*' => 'image|mimes:jpg,jpeg,png|max:2048',
 
             'categories'   => 'nullable|array',
             'categories.*' => 'integer|exists:categories,id',

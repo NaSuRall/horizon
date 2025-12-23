@@ -21,5 +21,10 @@ class Produit extends Model
         return $this->belongsTo(Marque::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(ProduitImage::class);
+    }
+
 
 }
