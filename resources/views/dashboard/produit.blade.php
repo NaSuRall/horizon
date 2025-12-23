@@ -65,6 +65,7 @@
                                 </form>
                             </td>
                         </tr>
+
                         <!-- Modal Modifier Produit -->
                         <div id="modal-{{ $produit->id }}" class="hidden fixed inset-0 bg-black/40 flex text-black items-center justify-center z-50">
                             <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative max-h-[90vh] overflow-y-auto">
@@ -80,6 +81,8 @@
                                 <form action="{{ route('produits.update', $produit->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                                     @csrf
                                     @method('PUT')
+
+                                    <input type="hidden" name="categories_force" value="1">
 
                                     <!-- Nom -->
                                     <input type="text" name="name" value="{{ $produit->name }}" class="w-full border p-2 rounded-lg"/>
@@ -99,9 +102,7 @@
                                     <!-- Marque -->
                                     <select name="marque_id" class="w-full border p-2 rounded-lg">
                                         @foreach($marques as $marque)
-                                            <option value="{{ $marque->id }}" @selected($produit->marque_id == $marque->id)>
-                                                {{ $marque->name }}
-                                            </option>
+                                            <option value="{{ $marque->id }}" @selected($produit->marque_id == $marque->id)>{{ $marque->name }}</option>
                                         @endforeach
                                     </select>
 
@@ -109,10 +110,8 @@
                                     <label class="block text-sm font-medium text-gray-700">Catégories</label>
 
                                     <div class="flex flex-col gap-2 max-h-40 overflow-y-auto border rounded-lg p-2">
-
                                         @foreach($categories->where('parent_id', null) as $cat)
                                             <div>
-                                                <!-- Checkbox catégorie parente -->
                                                 <label class="inline-flex items-center">
                                                     <input type="checkbox"
                                                            class="category-checkbox-{{ $produit->id }} h-4 w-4 text-blue-600"
@@ -122,12 +121,9 @@
                                                         @checked($produit->categories->contains($cat->id))>
                                                     <span class="ml-2 font-semibold">{{ $cat->name }}</span>
                                                 </label>
-
-                                                <!-- Sous-catégories dynamiques -->
                                                 <div id="subcats-{{ $produit->id }}-{{ $cat->id }}" class="ml-6 mt-2 hidden flex flex-col gap-1"></div>
                                             </div>
                                         @endforeach
-
                                     </div>
 
                                     <button type="submit" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800">
@@ -136,7 +132,6 @@
                                 </form>
                             </div>
                         </div>
-
                     @endforeach
                     </tbody>
                 </table>
@@ -147,10 +142,9 @@
                 {{ $produits->links() }}
             </div>
 
-            <!-- Modal create Produit -->
+            <!-- Modal Create Produit -->
             <div id="modal-produit" class="hidden fixed inset-0 bg-black/40 bg-opacity-50 flex items-center justify-center z-50">
-                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative
-                max-h-[90vh] overflow-y-auto">
+                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative max-h-[90vh] overflow-y-auto">
 
                     <button
                         onclick="document.getElementById('modal-produit').classList.add('hidden')"
@@ -191,14 +185,11 @@
                             @endforeach
                         </select>
 
-                        <!-- Catégories parentes (checkboxes) -->
+                        <!-- Catégories -->
                         <label class="block text-sm font-medium text-gray-700">Catégories</label>
-
                         <div class="flex flex-col gap-2 max-h-40 overflow-y-auto border rounded-lg p-2">
-
                             @foreach($categories->where('parent_id', null) as $cat)
                                 <div>
-                                    <!-- Checkbox catégorie parente -->
                                     <label class="inline-flex items-center">
                                         <input type="checkbox"
                                                class="category-checkbox h-4 w-4 text-blue-600"
@@ -207,14 +198,11 @@
                                                value="{{ $cat->id }}">
                                         <span class="ml-2 font-semibold">{{ $cat->name }}</span>
                                     </label>
-
-                                    <!-- Conteneur des sous-catégories (rempli dynamiquement) -->
                                     <div id="subcats-{{ $cat->id }}" class="ml-6 mt-2 hidden flex flex-col gap-1"></div>
                                 </div>
                             @endforeach
-
                         </div>
-                        <!-- Submit -->
+
                         <button type="submit" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800">
                             Créer
                         </button>
@@ -224,96 +212,53 @@
 
         </div>
     </section>
+
     <script>
-        const subcategoriesByParent = @json(
-        $categories->groupBy('parent_id')
-    );
-    </script>
-    <script>
-        document.querySelectorAll('.category-checkbox').forEach(checkbox => {
-            checkbox.addEventListener('change', function () {
+        const subcategoriesByParent = @json($categories->groupBy('parent_id'));
+        const preselected = @json($produits->mapWithKeys(fn($p) => [$p->id => $p->categories->pluck('id')]));
 
-                const parentId = this.dataset.id;
-                const container = document.getElementById('subcats-' + parentId);
+        // Fonction générique pour gérer les sous-catégories
+        function handleSubcategories(checkbox, containerId, productId = null) {
+            const container = document.getElementById(containerId);
+            if (!checkbox.checked) return container.innerHTML = container.classList.add('hidden');
 
-                // Si décoché → on cache et on vide
-                if (!this.checked) {
-                    container.innerHTML = '';
-                    container.classList.add('hidden');
-                    return;
-                }
-
-                // Récupère les sous-catégories du parent
-                const subs = subcategoriesByParent[parentId] || [];
-
-                // Si aucune sous-catégorie
-                if (subs.length === 0) {
-                    container.innerHTML = '<p class="text-gray-400 text-sm">Aucune sous-catégorie</p>';
-                } else {
-                    container.innerHTML = subs.map(sub => `
-                <label class="inline-flex items-center">
-                    <input type="checkbox"
-                           name="categories[]"
-                           value="${sub.id}"
-                           class="form-checkbox h-4 w-4 text-blue-600">
-                    <span class="ml-2">${sub.name}</span>
-                </label>
-            `).join('');
-                }
-
-                container.classList.remove('hidden');
-            });
-        });
-
-
-        function initCategoryLogicForProduct(productId) {
-
-            document.querySelectorAll('.category-checkbox-' + productId).forEach(checkbox => {
-
-                const parentId = checkbox.dataset.id;
-                const container = document.getElementById('subcats-' + productId + '-' + parentId);
-
-                function renderSubcategories() {
-                    const subs = subcategoriesByParent[parentId] || [];
-
-                    if (!checkbox.checked) {
-                        container.innerHTML = '';
-                        container.classList.add('hidden');
-                        return;
-                    }
-
-                    container.innerHTML = subs.map(sub => `
-                <label class="inline-flex items-center">
-                    <input type="checkbox"
-                           name="categories[]"
-                           value="${sub.id}"
-                           class="form-checkbox h-4 w-4 text-blue-600"
-                           ${window.preselectedCategories[productId]?.includes(sub.id) ? 'checked' : ''}>
-                    <span class="ml-2">${sub.name}</span>
-                </label>
-            `).join('');
-
-                    container.classList.remove('hidden');
-                }
-
-                // Quand on coche/décoche
-                checkbox.addEventListener('change', renderSubcategories);
-
-                // Si déjà coché → on affiche les sous-catégories
-                renderSubcategories();
-            });
+            const parentId = checkbox.dataset.id;
+            const subs = subcategoriesByParent[parentId] || [];
+            container.innerHTML = subs.length ? subs.map(sub => `
+        <label class="inline-flex items-center">
+            <input type="checkbox"
+                   name="categories[]"
+                   value="${sub.id}"
+                   class="form-checkbox h-4 w-4 text-blue-600"
+                   ${productId && preselected[productId]?.includes(sub.id) ? 'checked' : ''}>
+            <span class="ml-2">${sub.name}</span>
+        </label>
+    `).join('') : '<p class="text-gray-400 text-sm">Aucune sous-catégorie</p>';
+            container.classList.remove('hidden');
         }
 
-        // Préparer les catégories déjà liées
-        window.preselectedCategories = @json(
-    $produits->mapWithKeys(fn($p) => [$p->id => $p->categories->pluck('id')])
-);
+        // Pour le formulaire de création
+        document.querySelectorAll('.category-checkbox').forEach(cb => {
+            cb.addEventListener('change', () => handleSubcategories(cb, 'subcats-' + cb.dataset.id));
+        });
 
-        // Initialiser chaque modal produit
+        // Pour les modals modification
         @foreach($produits as $p)
-        initCategoryLogicForProduct({{ $p->id }});
+        document.querySelectorAll('.category-checkbox-{{ $p->id }}').forEach(cb => {
+            const containerId = 'subcats-{{ $p->id }}-' + cb.dataset.id;
+            cb.addEventListener('change', () => handleSubcategories(cb, containerId, {{ $p->id }}));
+            handleSubcategories(cb, containerId, {{ $p->id }}); // initialisation
+        });
         @endforeach
 
+        // Reset des sous-catégories décochées au submit
+        document.querySelectorAll('form[action*="produits"]').forEach(form => {
+            form.addEventListener('submit', () => {
+                form.querySelectorAll('[id^="subcats-"]').forEach(c => {
+                    if (c.classList.contains('hidden')) c.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                });
+            });
+        });
     </script>
 
 @endsection
