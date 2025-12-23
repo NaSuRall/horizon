@@ -50,11 +50,6 @@
                 <i class="fa-solid fa-address-book"></i> Activity
             </a>
 
-            <a href="{{ route('social.index') }}"
-               class="flex items-center justify-start gap-2 px-3 py-2 rounded-xl w-full
-          {{ request()->routeIs('social.*') ? 'bg-red-600 text-white' : '' }}">
-                <i class="fa-solid fa-address-book"></i> Réseaux Sociaux
-            </a>
 
         </div>
     </div>
